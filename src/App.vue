@@ -69,12 +69,16 @@ export default {
       }
     },
     judgeRoute(n, v) {
-      if (!v.name && n.meta.isIndex) {
-        this.fade = 'slide-up'
+      if (n.meta.isLogin || v.meta.isLogin) {
+        this.fade = n.meta.isLogin ? 'login-in' : 'login-out'
       } else {
-        if (v.name) {
-          this.headerConfig.slide = n.meta.oDeep > v.meta.oDeep ? 'slide-in' : 'slide-out'
-          this.fade = n.meta.oDeep > v.meta.oDeep ? 'fade-in' : 'fade-out'
+        if (!v.name && n.meta.isIndex) {
+          this.fade = 'slide-up'
+        } else {
+          if (v.name) {
+            this.headerConfig.slide = n.meta.oDeep > v.meta.oDeep ? 'slide-in' : 'slide-out'
+            this.fade = n.meta.oDeep > v.meta.oDeep ? 'fade-in' : 'fade-out'
+          }
         }
       }
       this.showHeader = n.meta.showHeader
@@ -85,6 +89,7 @@ export default {
         this.headerConfig.searchBox = n.meta.searchBox // 首页
         this.headerConfig.extra = n.meta.extra || false // 头部是否有额外的icon
         this.headerConfig.tabs = n.meta.tabs || []
+        this.headerConfig.isHome = n.meta.isHome || false
       }
       const assignData = this.assignData(n) // 函数柯里化, 设置一个默认值在里面
       assignData(['keepAlive', 'hasNoBack', 'bgColor', 'showImportHeader', 'isIndex', 'backPage'], this.actionData) // 给各种配置赋值
@@ -137,7 +142,7 @@ export default {
   font-family: -apple-system,BlinkMacSystemFont,PingFang SC,Helvetica Neue,STHeiti,Microsoft Yahei,Tahoma,Simsun,sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #444;
   width: 100%;
   height: 100%;
   font-size: 28px;
@@ -145,6 +150,7 @@ export default {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  // background: rgba(0, 0, 0, .9);
 }
 .page-header--import {
   z-index: 100 !important;
@@ -160,7 +166,6 @@ export default {
   height: 100%;
   left: 0;
   top: 0;
-  background: #fff;
   z-index: 10;
   display: flex;
   flex-direction: column;

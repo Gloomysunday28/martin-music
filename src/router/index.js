@@ -9,7 +9,9 @@ export default new Router({
       path: '/',
       name: 'MusicHome',
       meta: {
-        showHeader: false,
+        keepAlive: true,
+        isHome: true,
+        showHeader: true,
         isIndex: true,
         oDeep: 1
       },
@@ -25,6 +27,15 @@ export default new Router({
         oDeep: 0
       },
       component: () => import('@/views/Login')
+    },
+    {
+      path: '/search',
+      name: 'MusicSearch',
+      meta: {
+        showHeader: true,
+        oDeep: 3
+      },
+      component: () => import('@/views/Search')
     }
   ]
 })

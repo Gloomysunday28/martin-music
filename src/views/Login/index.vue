@@ -90,6 +90,7 @@ export default {
       }).then(res => {
         if (res.data.code === 200) {
           window.localStorage.setItem('personal', JSON.stringify(res.data.profile))
+          this.$store.dispatch('setPersonInfo', res.data.profile)
           this.$router.push({
             name: 'MusicHome'
           })
@@ -103,7 +104,6 @@ export default {
 <style scoped lang="less">
 .g-layout {
   position: relative;
-  background: #000 !important;
   .c-music__login {
     width: 80%;
     height: 400px;

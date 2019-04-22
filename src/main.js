@@ -9,6 +9,7 @@ import HTTP from '@/api/http'
 import Api from '@/api/api'
 import store from '@/store'
 import '@/assets/css/common.less'
+import 'swiper/dist/css/swiper.css'
 // import '@/assets/css/resource.less'
 import '@/assets/font/iconfont.css'
 

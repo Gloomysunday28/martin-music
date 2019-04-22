@@ -33,6 +33,12 @@
             {{tab.name}}
           </div>
         </div>
+        <div class="c-home__header" v-if="headerConfig.isHome">
+          <div class="c-music__title">
+            DISCOVER
+          </div>
+          <img class="c-person__header" :src="personal.avatarUrl" alt="">
+        </div>
       </div>
     </transition>
     <base-extra :extra="headerConfig.extra" :change-header="headerConfig.changeHeader" v-if="headerConfig.extra"/>
@@ -41,6 +47,7 @@
 
 <script>
 import Extra from './HeaderExtra'
+import {mapState} from 'vuex'
 
 export default {
   name: 'BaseHeader',
@@ -59,6 +66,9 @@ export default {
       required: true,
     },
   },
+  computed: mapState({
+    personal: state => state.baseInfo.personal
+  }),
   data() {
     return {
       search: '',
@@ -99,15 +109,15 @@ export default {
 <style scoped lang="less">
 .header {
   width: 100vw;
-  height: 88px;
-  margin-bottom: 5px;
+  height: 110px;
+  box-sizing: border-box;
   flex: none;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  background: #fff;
-  color: #383838;
+  background: rgba(0, 0, 0, .9);
+  color: #444;
   // z-index: 20;
   .bar {
     position: absolute;
@@ -211,6 +221,24 @@ export default {
       top: 50%;
       transform: translateY(-50%);
       font-size: 34px;
+    }
+  }
+  .c-home__header {
+    width: 100%;
+    flex: none;
+    padding: 10px 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .c-person__header {
+      width: 50px;
+      height: 50px;
+      border-radius: 50px;
+    }
+    .c-music__title {
+      color: #fff;
+      font-weight: 600;
+      font-size: 42px;
     }
   }
 }

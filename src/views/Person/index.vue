@@ -26,9 +26,47 @@
     </div>
     <div class="c-person__songs">
       <div class="c-person__list">
-        <div>
+        <div class="c-song__list">
+          <div class="c-song__img"></div>
+          <div class="c-song__img"></div>
+          <div class="c-song__img"></div>
         </div>
-        <div>
+        <div class="c-song__title">
+          <span class="c-song__label">收藏</span>
+          <span class="c-song__number">1</span>
+        </div>
+      </div>
+      <div class="c-person__list">
+        <div class="c-song__list">
+          <div class="c-song__img"></div>
+          <div class="c-song__img"></div>
+          <div class="c-song__img"></div>
+        </div>
+        <div class="c-song__title">
+          <span class="c-song__label">收藏</span>
+          <span class="c-song__number">1</span>
+        </div>
+      </div>
+      <div class="c-person__list">
+        <div class="c-song__list">
+          <div class="c-song__img"></div>
+          <div class="c-song__img"></div>
+          <div class="c-song__img"></div>
+        </div>
+        <div class="c-song__title">
+          <span class="c-song__label">收藏</span>
+          <span class="c-song__number">1</span>
+        </div>
+      </div>
+      <div class="c-person__list">
+        <div class="c-song__list">
+          <div class="c-song__img"></div>
+          <div class="c-song__img"></div>
+          <div class="c-song__img"></div>
+        </div>
+        <div class="c-song__title">
+          <span class="c-song__label">收藏</span>
+          <span class="c-song__number">1</span>
         </div>
       </div>
     </div>
@@ -109,6 +147,42 @@ export default {
         color: #666;
         margin-left: 10px;
         margin-right: 30px;
+      }
+    }
+    .c-person__songs {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .c-person__list {
+      padding: 20px;
+      width: 50%;
+      box-sizing: border-box;
+      .c-song__list {
+        height: 120px;
+        display: flex;
+        .c-song__img {
+          flex: 1;
+          background: #666;
+          box-shadow: -10px 10px 10px rgba(0, 0, 0, .5);
+        }
+      }
+      .c-song__title {
+        height: 60px;
+        background: #000;
+        border-radius: 30px;
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        .c-song__label {
+          color: #ddd;
+        }
+        .c-song__number {
+          font-weight: bold;
+          font-size: 36px;
+        }
       }
     }
   }

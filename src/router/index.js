@@ -50,6 +50,39 @@ export default new Router({
         title: '我的'
       },
       component: () => import('@/views/Person')
+    },
+    {
+      path: '/message',
+      name: 'MusicMessage',
+      meta: {
+        keepAlive: false,
+        showHeader: true,
+        oDeep: 4,
+        title: '动态'
+      },
+      component: () => import('@/views/Message')
+    },
+    {
+      path: '/follows',
+      name: 'MusicFollows',
+      meta: {
+        keepAlive: false,
+        showHeader: true,
+        oDeep: 4,
+        title: '关注'
+      },
+      component: () => import('@/views/Follows')
+    },
+    {
+      path: '/others/:uid',
+      name: 'MusicOthers',
+      meta: {
+        keepAlive: false,
+        showHeader: true,
+        oDeep: 5,
+        title: ''
+      },
+      component: () => import('@/views/Others')
     }
   ]
 })

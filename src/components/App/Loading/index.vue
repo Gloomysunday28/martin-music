@@ -68,7 +68,7 @@ export default {
       }
       svg {
         animation: rotate 1s linear infinite;
-        fill: rgba(0, 0, 0, 0.7);
+        fill: #A6A6A6;
       }
     }
   }

@@ -54,11 +54,8 @@ export default {
   },
   mounted() {
     this.$common.listen('setHeaderBack', this.changeHeaderBack)
-    this.valitLogin()
   },
   methods: {
-    valitLogin() {
-    },
     changeHeaderBack() {
       this.YGBOARD = true
     },
@@ -155,6 +152,7 @@ export default {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  background: #0D0D0D;
   // background: rgba(0, 0, 0, .9);
 }
 .page-header--import {

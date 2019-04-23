@@ -117,7 +117,7 @@ export default {
     -webkit-overflow-scrolling: touch;
   }
   .c-search__item {
-    margin-bottom: 28px;
+    margin-bottom: 40px;
     font-size: 24px;
   }
   .c-search__sons {

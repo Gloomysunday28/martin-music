@@ -112,7 +112,7 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
-  background: rgba(0, 0, 0, .9);
+  background: #0D0D0D;
   color: #444;
   // z-index: 20;
   .bar {

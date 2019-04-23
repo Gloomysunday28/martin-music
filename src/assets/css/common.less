@@ -23,6 +23,7 @@ input{
 }
 
 img {
+  max-width: 100%;
   display: block;
 }
 
@@ -211,7 +212,10 @@ input:focus {
 }
 
 .g-layout {
-  background: rgba(0, 0, 0, .9);
+  box-sizing: border-box;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #0D0D0D;
 }
 
 .app-loading-enter-active {
@@ -246,4 +250,17 @@ input:focus {
   width: 50px;
   height: 50px;
   border-radius: 50px;
+}
+
+.c-person__vip {
+  padding: 5px 20px;
+  border-radius: 30px;
+  background: #666;
+  font-size: 26px;
+  color: rgba(0, 0, 0, .9);
+  font-weight: bold;
+  &.c-person__vip--active {
+    background: yellow;
+    color: #000;
+  }
 }

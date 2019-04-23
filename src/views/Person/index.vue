@@ -10,14 +10,14 @@
       </div>
       <div class="c-person__follow">
         <div class="c-person__follow c-person__follows">
-          <p>
+          <router-link :to="{name: 'MusicFollows', query: {title: '关注'}}">
             <span class="c-follow__label">关注 </span>
             <span class="c-follow__data">{{personal.follows}}</span>
-          </p>
-          <p>
+          </router-link>
+          <router-link :to="{name: 'MusicFollows', query: {title: '粉丝'}}">
             <span class="c-follow__label">粉丝 </span>
             <span class="c-follow__data">{{personal.followeds}}</span>
-          </p>
+          </router-link>
         </div>
         <div :class="['c-person__vip', {'c-person__vip--active': personal.vipType}]">
           VIP
@@ -33,7 +33,29 @@
         </div>
         <div class="c-song__title">
           <span class="c-song__label">喜欢</span>
-          <span class="c-song__number">1</span>
+          <span class="c-song__number">{{loveList.length}}</span>
+        </div>
+      </div>
+      <div class="c-person__list">
+        <div class="c-song__list">
+          <div class="c-song__img" v-for="play in playListCover" :key="play.id">
+            <img class="c-song__cover" :src="play.coverImgUrl">
+          </div>
+        </div>
+        <div class="c-song__title">
+          <span class="c-song__label">歌单</span>
+          <span class="c-song__number">{{playList.length}}</span>
+        </div>
+      </div>
+      <div class="c-person__list">
+        <div class="c-song__list">
+          <div class="c-song__img" v-for="play in recentListCover" :key="play.song.id">
+            <img class="c-song__cover" :src="play.song.al.picUrl">
+          </div>
+        </div>
+        <div class="c-song__title">
+          <span class="c-song__label">最近播放</span>
+          <span class="c-song__number">{{recentList.length}}</span>
         </div>
       </div>
       <div class="c-person__list">
@@ -44,32 +66,14 @@
         </div>
         <div class="c-song__title">
           <span class="c-song__label">收藏</span>
-          <span class="c-song__number">1</span>
-        </div>
-      </div>
-      <div class="c-person__list">
-        <div class="c-song__list">
-          <div class="c-song__img"></div>
-          <div class="c-song__img"></div>
-          <div class="c-song__img"></div>
-        </div>
-        <div class="c-song__title">
-          <span class="c-song__label">收藏</span>
-          <span class="c-song__number">1</span>
-        </div>
-      </div>
-      <div class="c-person__list">
-        <div class="c-song__list">
-          <div class="c-song__img"></div>
-          <div class="c-song__img"></div>
-          <div class="c-song__img"></div>
-        </div>
-        <div class="c-song__title">
-          <span class="c-song__label">收藏</span>
-          <span class="c-song__number">1</span>
+          <span class="c-song__number">{{userSubCount}}</span>
         </div>
       </div>
     </div>
+    <router-link class="c-music__message" :to="{name: 'MusicMessage'}">
+      动态
+      <i class="iconfont">&#xe603;</i>
+    </router-link>
   </div>
 </template>
 
@@ -80,17 +84,46 @@ export default {
   name: 'MusicPerson',
   data() {
     return {
+      playList: [],
+      loveList: [],
+      recentList: [],
+      userSubCount: []
     }
   },
   computed: mapState({
-    personal: state => state.baseInfo.personal
+    personal: state => state.baseInfo.personal,
+    playListCover() {
+      return [...this.playList].splice(0, 3)
+    },
+    recentListCover() {
+      return [...this.recentList].splice(0, 3)
+    },
   }),
   mounted() {
     this.getPersonMsg()
   },
+  activated() {
+    this.$common.trigger('getStatus', '我的', 'title')
+  },
   methods: {
     getPersonMsg() {
-      Promise.all([this.getLoveSong()]).then(res => {
+      Promise.all([
+        this.getUserInfo(),
+        this.getLoveSong(),
+        this.getRecentSong(),
+        this.getUserSubCount()
+      ]).then(({0: playList, 1: loveList, 2: recentList, 3: userSubCount}) => {
+        this.playList = playList.data.playlist
+        this.loveList = loveList.data.ids
+        this.recentList = recentList.data.weekData
+        this.userSubCount = userSubCount.data.mvCount
+      })
+    },
+    getUserInfo() {
+      return this.$http.get(this.$api.userSong, {
+        params: {
+          uid: this.personal.userId
+        }
       })
     },
     getLoveSong() {
@@ -99,6 +132,16 @@ export default {
           uid: this.personal.userId
         }
       })
+    },
+    getRecentSong() {
+      return this.$http.get(this.$api.userRecent, {
+        params: {
+          uid: this.personal.userId
+        }
+      })
+    },
+    getUserSubCount() {
+      return this.$http.get(this.$api.userSubCount)
     }
   }
 }
@@ -141,18 +184,6 @@ export default {
       .c-person__follows {
         justify-content: flex-start;
       }
-      .c-person__vip {
-        padding: 5px 20px;
-        border-radius: 30px;
-        background: #666;
-        font-size: 26px;
-        color: rgba(0, 0, 0, .9);
-        font-weight: bold;
-        &.c-person__vip--active {
-          background: yellow;
-          color: #000;
-        }
-      }
       .c-follow__label {
         font-size: 24px;
       }
@@ -179,6 +210,10 @@ export default {
           flex: 1;
           background: #666;
           box-shadow: -10px 10px 10px rgba(0, 0, 0, .5);
+          .c-song__cover {
+            width: 100%;
+            height: 100%;
+          }
         }
       }
       .c-song__title {
@@ -197,6 +232,18 @@ export default {
           font-weight: bold;
           font-size: 36px;
         }
+      }
+    }
+    .c-music__message {
+      margin-top: 40px;
+      font-size: 32px;
+      color: #ccc;
+      display: flex;
+      justify-content: space-between;
+      .iconfont {
+        color: #ccc;
+        font-size: 36px;
+        transform: rotate(-.25turn);
       }
     }
   }

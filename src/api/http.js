@@ -5,7 +5,7 @@ import qs from 'qs'
 const box = new Vue()
 
 const Axios = axios.create({
-  baseURL: 'http://127.0.0.1:3000',
+  baseURL: 'http://192.168.1.169:3000',
   timeout: 10000,
   // transformRequest(data) {
   //   return qs.stringify(data)
@@ -18,6 +18,7 @@ const Axios = axios.create({
 // axios.defaults.headers.common['Authorization'] = window.localStorage.access_token
 // axios.defaults.headers.common['Content-Type'] = 'text/html'
 Axios.interceptors.request.use((config) => {
+  box.$loading(true)
   if (config.method === 'post') {
     // config.data = JSON.stringify(config.data)
     // config.headers['Content-Type'] = 'multipart/form-data'
@@ -29,6 +30,7 @@ Axios.interceptors.request.use((config) => {
 
 Axios.interceptors.response.use((response) => {
   // Do something with response data
+  box.$loading(false)
   if (response) {
     switch (true) {
       case response.data.code !== 200:
@@ -38,8 +40,10 @@ Axios.interceptors.response.use((response) => {
         break
     }
   }
+
   return response
 }, (error) => {
+  box.$loading.show(false)
   if (error.response) {
     switch (error.response.status) {
       case 400:

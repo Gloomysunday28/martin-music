@@ -6,7 +6,7 @@
       </router-link>
       <div class="swiper-container">
         <swiper class="swiper-wrapper" :options="swiperOption">
-          <swiper-slide class="swiper-slide" v-for="ban in banner" :key="ban.encodeId">
+          <swiper-slide class="swiper-slide" v-for="ban in banner" :key="ban.imageUrl">
             <img class="swpier-img" :src="ban.imageUrl"/>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
@@ -147,18 +147,6 @@ export default {
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    .c-home__search {
-      height: 50px;
-      background: rgba(0, 0, 0, 1);
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      padding-left: 10px;
-      .iconfont {
-        font-size: 46px;
-        color: yellow;
-      }
-    }
   }
   .c-music__menu {
     margin-top: 50px;

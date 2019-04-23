@@ -12,18 +12,12 @@
             </router-link>
           </div>
         </div>
-        <div v-if="headerConfig.search">
-          <div class="c-search__box c-search__input">
-            <div class="c-search-icon">
-              <i class="iconfont">&#xe61c;</i>
-            </div>
-            <div class="search-input__box">
-              <!-- <form @submit="submitData" action=""> -->
-              <input type="text" class="search-input" placeholder="搜索" v-model="search"/>
-              <!-- </form> -->
-            </div>
-            <i class="iconfont header-search-icon" v-if="search" @click="search = ''">&#xe68c;</i>
-          </div>
+        <div class="c-search" v-if="headerConfig.search">
+          <Debounce>
+            <input class="c-home__search" type="text" v-model="search" @keyup="searchData"/>
+          </Debounce>
+          <i class="iconfont">&#xe621;</i>
+          <span class="c-search__cancel" @click="$router.back()">取消</span>
         </div>
         <div class="header-title" v-if="headerConfig.title">
           {{title || headerConfig.title}}
@@ -48,10 +42,12 @@
 <script>
 import Extra from './HeaderExtra'
 import {mapState} from 'vuex'
+import Debounce from '../App/Debounce'
 
 export default {
   name: 'BaseHeader',
   components: {
+    Debounce,
     'base-extra': Extra
   },
   props: {
@@ -93,12 +89,12 @@ export default {
     submitData(e) {
       e.preventDefault()
       return false // 禁止刷新页面
+    },
+    searchData() {
+      this.$common.trigger('changeStatus', this.search)
     }
   },
   watch: {
-    search(e) {
-      this.$common.trigger('changeStatus', e)
-    },
     tabIndex(e) {
       this.$common.trigger('changeStatus', e)
     },
@@ -194,34 +190,29 @@ export default {
     text-align: center;
     font-weight: 500;
   }
-  .c-search__input {
-    position: relative;
-    margin-right: 50px;
+  .c-search {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding-right: 20px;
-    width: 550px;
-    .search-input__box {
-      display: flex;
-      align-items: center;
-      width: 480px;
-      height: 60px;
-      background: #F5F5F5;
-    }
-    .search-input {
-      width: 440px;
-      height: 40px;
-      background: #F5F5F5;
-      line-height: 40px;
-    }
-    .header-search-icon {
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    .iconfont {
       position: absolute;
-      right: 15px;
+      left: 20px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 34px;
+      font-size: 46px;
+      color: yellow;
     }
+  }
+  .c-home__search {
+    width: 90%;
+    box-sizing: border-box;
+    color: #ccc;
+    padding-left: 80px;
+  }
+  .c-search__cancel {
+    color: #999;
   }
   .c-home__header {
     width: 100%;

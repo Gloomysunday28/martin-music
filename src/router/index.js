@@ -32,10 +32,24 @@ export default new Router({
       path: '/search',
       name: 'MusicSearch',
       meta: {
+        keepAlive: true,
         showHeader: true,
-        oDeep: 3
+        oDeep: 3,
+        isIndex: true,
+        search: true
       },
       component: () => import('@/views/Search')
+    },
+    {
+      path: '/person',
+      name: 'MusicPerson',
+      meta: {
+        keepAlive: true,
+        showHeader: true,
+        oDeep: 3,
+        title: '我的'
+      },
+      component: () => import('@/views/Person')
     }
   ]
 })

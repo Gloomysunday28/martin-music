@@ -4,6 +4,7 @@ import router from './router'
 import Bus from '@/utils/Bus'
 import FastClick from 'fastclick'
 import Toast from '@/components/App/Toast'
+import Loading from '@/components/App/Loading'
 import Dialog from '@/components/App/Dialog'
 import HTTP from '@/api/http'
 import Api from '@/api/api'
@@ -16,6 +17,7 @@ import '@/assets/font/iconfont.css'
 FastClick.attach(document.body)
 
 Vue.use(Toast)
+Vue.use(Loading)
 Vue.use(Dialog)
 Vue.use(Bus)
 Vue.use(HTTP)

@@ -54,8 +54,11 @@ export default {
   },
   mounted() {
     this.$common.listen('setHeaderBack', this.changeHeaderBack)
+    this.valitLogin()
   },
   methods: {
+    valitLogin() {
+    },
     changeHeaderBack() {
       this.YGBOARD = true
     },

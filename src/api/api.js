@@ -4,6 +4,7 @@ const api = {
   sendCapture: '/captch/sent', // 发送验证码
   verifyCapture: '/captch/verify', // 验证验证码
   resetPwd: '/captch/register', // 重置密码
+  loginStatus: '/login/status', // 查询登录状态
 
   // 广告
   getBanner: '/banner',
@@ -14,6 +15,7 @@ const api = {
   searchHot: '/search/hot', // 热搜,
   searchSong: '/search', // 多重匹配
   searchAdvance: '/search/suggest', // 搜索建议
+  loveSongList: 'likelist', // 喜欢音乐的列表
 }
 
 export default {

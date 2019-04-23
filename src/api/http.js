@@ -15,14 +15,8 @@ const Axios = axios.create({
   }
 })
 
-// axios.defaults.headers.common['Authorization'] = window.localStorage.access_token
-// axios.defaults.headers.common['Content-Type'] = 'text/html'
 Axios.interceptors.request.use((config) => {
   box.$loading(true)
-  if (config.method === 'post') {
-    // config.data = JSON.stringify(config.data)
-    // config.headers['Content-Type'] = 'multipart/form-data'
-  }
   return config
 }, (error) => {
   return Promise.reject(error)
@@ -43,7 +37,7 @@ Axios.interceptors.response.use((response) => {
 
   return response
 }, (error) => {
-  box.$loading.show(false)
+  box.$loading(false)
   if (error.response) {
     switch (error.response.status) {
       case 400:

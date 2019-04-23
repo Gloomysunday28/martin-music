@@ -32,7 +32,7 @@
           <div class="c-song__img"></div>
         </div>
         <div class="c-song__title">
-          <span class="c-song__label">收藏</span>
+          <span class="c-song__label">喜欢</span>
           <span class="c-song__number">1</span>
         </div>
       </div>
@@ -85,7 +85,21 @@ export default {
   computed: mapState({
     personal: state => state.baseInfo.personal
   }),
+  mounted() {
+    this.getPersonMsg()
+  },
   methods: {
+    getPersonMsg() {
+      Promise.all([this.getLoveSong()]).then(res => {
+      })
+    },
+    getLoveSong() {
+      return this.$http.get(this.$api.loveSongList, {
+        params: {
+          uid: this.personal.userId
+        }
+      })
+    }
   }
 }
 </script>

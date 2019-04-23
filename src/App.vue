@@ -1,8 +1,10 @@
 <template>
   <div id="app" ref="contain">
-    <span :class="['header-back', {'header-back--board': YGBOARD}]" @click="back" v-if="!isIndex">
-      <i class="iconfont back-icon">&#xe61b;</i>
-    </span>
+    <transition name="opacity">
+      <span :class="['header-back', {'header-back--board': YGBOARD}]" @click="back" v-if="!isIndex">
+        <i class="iconfont back-icon">&#xe61b;</i>
+      </span>
+    </transition>
     <base-header :class="{'page-header--import': showImportHeader}" :header-config="headerConfig" :bg-color="bgColor"/>
     <div class="g-container">
       <transition :name="fade">

@@ -31,7 +31,7 @@
           <div class="c-music__title">
             DISCOVER
           </div>
-          <img class="c-person__header" :src="personal.avatarUrl" alt="">
+          <img class="c-person__header" :src="personal.avatarUrl" alt="" @click="$router.push({name: 'MusicPerson'})">
         </div>
       </div>
     </transition>
@@ -186,8 +186,9 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 38px;
+    // font-size: px;
     text-align: center;
+    color: #ccc;
     font-weight: 500;
   }
   .c-search {
@@ -221,11 +222,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .c-person__header {
-      width: 50px;
-      height: 50px;
-      border-radius: 50px;
-    }
     .c-music__title {
       color: #fff;
       font-weight: 600;

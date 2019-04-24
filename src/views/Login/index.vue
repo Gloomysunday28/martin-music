@@ -91,9 +91,7 @@ export default {
         if (res.data.code === 200) {
           window.localStorage.setItem('personal', JSON.stringify(res.data.profile))
           this.$store.dispatch('setPersonInfo', res.data.profile)
-          this.$router.push({
-            name: 'MusicHome'
-          })
+          this.$router.back()
         }
       })
     }

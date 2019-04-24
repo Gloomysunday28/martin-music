@@ -122,7 +122,7 @@ export default {
   }
   .c-search__sons {
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
     .c-sons__album {
       width: 100px;
       height: 100px;

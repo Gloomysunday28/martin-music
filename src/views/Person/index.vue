@@ -195,15 +195,17 @@ export default {
       }
     }
     .c-person__songs {
-      margin-top: 30px;
+      margin-top: 50px;
       display: flex;
       flex-wrap: wrap;
     }
     .c-person__list {
+      margin-bottom: 50px;
       padding: 20px;
       width: 50%;
       box-sizing: border-box;
       .c-song__list {
+        margin-bottom: 50px;
         height: 120px;
         display: flex;
         .c-song__img {

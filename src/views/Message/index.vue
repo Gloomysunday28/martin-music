@@ -28,6 +28,7 @@ export default {
     }
   },
   mounted() {
+    this.$common.trigger('getStatus', '动态', 'title')
     this.getMessage()
   },
   methods: {

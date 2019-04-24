@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import Router from '@/router'
 import axios from 'axios'
 import qs from 'qs'
 
@@ -48,6 +49,9 @@ Axios.interceptors.response.use((response) => {
       case 502:
         box.$toast(error.response, {styles: {backgroud: '#fff'}})
         return error.response
+      case 301:
+        Router.push({name: 'MusicLogin'})
+        break
       default:
         break
     }

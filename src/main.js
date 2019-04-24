@@ -10,10 +10,18 @@ import Dialog from '@/components/App/Dialog'
 import HTTP from '@/api/http'
 import Api from '@/api/api'
 import store from '@/store'
+import MusicInput from '@/components/App/Form/Input'
+import MusicTextArea from '@/components/App/Form/TextArea'
 import '@/assets/css/common.less'
 import 'swiper/dist/css/swiper.css'
 // import '@/assets/css/resource.less'
 import '@/assets/font/iconfont.css'
+
+const components = [MusicInput, MusicTextArea]
+
+components.forEach(comp => {
+  Vue.component(comp.name, comp)
+})
 
 FastClick.attach(document.body)
 

@@ -9,6 +9,9 @@ const api = {
   // 广告
   getBanner: '/banner',
 
+  // 热门
+  playHot: '/playlist/hot', // 热门歌单
+
   // 获取用户电台
   userInfo: '/user/detail', // 获取用户信息
   userDj: '/user/dj',
@@ -24,6 +27,7 @@ const api = {
   userFollows: '/user/follows', // 获取用户关注
   userFolloweds: '/user/followeds', // 获取用户粉丝
   recommendByPerDay: '/recommend/songs', // 获取每日推荐歌曲
+  addSongList: '/playlist/create', // 新建歌单
 
   // 关注
   followUser: '/follow', // 关注或者取关

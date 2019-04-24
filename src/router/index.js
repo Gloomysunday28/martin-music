@@ -52,6 +52,17 @@ export default new Router({
       component: () => import('@/views/Search')
     },
     {
+      path: '/song/type',
+      name: 'MusicSongType',
+      meta: {
+        keepAlive: true,
+        showHeader: true,
+        oDeep: 3,
+        title: '热门歌单'
+      },
+      component: () => import('@/views/SongType')
+    },
+    {
       path: '/person',
       name: 'MusicPerson',
       meta: {
@@ -72,6 +83,17 @@ export default new Router({
         title: '歌单'
       },
       component: () => import('@/views/SongList')
+    },
+    {
+      path: '/add/song/list',
+      name: 'MusicAddSongList',
+      meta: {
+        keepAlive: false,
+        showHeader: true,
+        oDeep: 5,
+        title: '新建歌单'
+      },
+      component: () => import('@/views/AddSongList')
     },
     {
       path: '/message',

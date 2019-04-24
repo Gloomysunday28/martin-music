@@ -46,8 +46,10 @@ Axios.interceptors.response.use((response) => {
       case 401:
       case 408:
       case 500:
+        box.$toast(error.response.data.msg || '请求失败', {styles: {backgroud: '#fff'}})
+        return error.response
       case 502:
-        box.$toast(error.response, {styles: {backgroud: '#fff'}})
+        box.$toast('网络请求超时', {styles: {backgroud: '#fff'}})
         return error.response
       case 301:
         Router.push({name: 'MusicLogin'})

@@ -27,9 +27,9 @@
           </div>
         </router-link>
         <div class="c-music__item">
-          <div class="c-menu__img__contain">
+          <router-link class="c-menu__img__contain" :to="{name: 'MusicSongType'}">
             <img class="c-menu__img" :src="banner[1].imageUrl" alt="">
-          </div>
+          </router-link>
           <div class="c-menu__img__contain">
             <img class="c-menu__img" :src="banner[2].imageUrl" alt="">
           </div>

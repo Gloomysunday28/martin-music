@@ -206,12 +206,6 @@ export default {
       color: yellow;
     }
   }
-  .c-home__search {
-    width: 90%;
-    box-sizing: border-box;
-    color: #ccc;
-    padding-left: 80px;
-  }
   .c-search__cancel {
     color: #999;
   }
@@ -227,6 +221,12 @@ export default {
       font-weight: 600;
       font-size: 42px;
     }
+  }
+  .c-home__search {
+    width: 90%;
+    box-sizing: border-box;
+    color: #ccc;
+    padding-left: 80px;
   }
 }
 </style>

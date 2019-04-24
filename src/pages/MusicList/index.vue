@@ -1,6 +1,6 @@
 <template>
   <div class="c-music__list">
-    <div class="c-music__item" v-for="music in musicData" :key="music.id">
+    <router-link class="c-music__item" :to="{name: 'MusicPlaySong', params: {id: music.id}}" v-for="music in musicData" :key="music.id">
       <div class="c-music__msg">
         <img class="c-music__img" :src="music.album.picUrl" alt>
         <div class="c-music__info">
@@ -11,7 +11,7 @@
       <div class="c-music__option">
         <i class="iconfont">&#xe637;</i>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 

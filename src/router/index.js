@@ -127,6 +127,17 @@ export default new Router({
         title: ''
       },
       component: () => import('@/views/Others')
+    },
+    {
+      path: '/play/song/:id',
+      name: 'MusicPlaySong',
+      meta: {
+        keepAlive: false,
+        showHeader: false,
+        oDeep: 99,
+        title: ''
+      },
+      component: () => import('@/views/PlaySong')
     }
   ]
 })

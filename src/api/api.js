@@ -28,6 +28,7 @@ const api = {
   userFolloweds: '/user/followeds', // 获取用户粉丝
   recommendByPerDay: '/recommend/songs', // 获取每日推荐歌曲
   addSongList: '/playlist/create', // 新建歌单
+  songUrl: '/song/url', // 歌曲地址
 
   // 关注
   followUser: '/follow', // 关注或者取关

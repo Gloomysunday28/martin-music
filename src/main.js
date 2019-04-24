@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import {mapState} from 'vuex'
 import App from './App'
 import router from './router'
 import Bus from '@/utils/Bus'
@@ -24,6 +25,12 @@ Vue.use(HTTP)
 Vue.use(Api)
 
 Vue.config.productionTip = false
+
+Vue.mixin({
+  computed: mapState({
+    personal: state => state.baseInfo.personal,
+  })
+})
 
 /* eslint-disable no-new */
 new Vue({

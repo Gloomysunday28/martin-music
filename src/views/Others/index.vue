@@ -3,8 +3,8 @@
     <div class="c-user__info" v-if="user.profile">
       <div class="c-user__header">
         <img class="c-user__avatar" :src="user.profile.avatarUrl"/>
-        <div class="c-user__follow">
-
+        <div :class="['c-user__follow', {'c-user__follow--end': follow}]" @click="attentionUser(follow)">
+          <i class="iconfont">&#xe663;</i>
         </div>
       </div>
       <div class="c-user__name">
@@ -22,7 +22,8 @@ export default {
   name: 'MusicOthers',
   data() {
     return {
-      user: {}
+      user: {},
+      follow: false, // 是否关注
     }
   },
   mounted() {
@@ -36,6 +37,20 @@ export default {
         }
       }).then(res => {
         this.user = res.data
+        this.follow = this.user.profile.followed
+      })
+    },
+    attentionUser(atten) { // 关注或者取关
+      this.$http.get(this.$api.followUser, {
+        params: {
+          id: this.$route.params.uid,
+          t: (1 - +atten)
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.$toast((atten ? '取关' : '关注') + '成功')
+          this.follow = !atten
+        }
       })
     }
   }
@@ -53,28 +68,42 @@ export default {
       align-items: center;
     }
     .c-user__avatar {
-      width: 300px;
-      height: 300px;
-      border-radius: 300px;
+      width: 150px;
+      height: 150px;
+      border-radius: 150px;
     }
     .c-user__header {
       position: relative;
       .c-user__follow {
-        width: 80px;
-        height: 80px;
-        border-radius: 80px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 60px;
+        height: 60px;
+        border-radius: 60px;
         background: #999;
         position: absolute;
-        right: 0;
-        bottom: 0;
+        right: -25px;
+        bottom: -10px;
+        &.c-user__follow--end {
+          background: yellow;
+          .iconfont {
+            color: #232323;
+          }
+        }
+        .iconfont {
+          font-size: 42px;
+        }
       }
     }
     .c-user__name {
       margin-top: 40px;
       color: #fff;
-      font-size: 36px;
+      font-size: 26px;
       display: flex;
       .c-person__vip {
+        padding: 2px 10px;
+        font-size: 24px;
         margin-left: 40px;
       }
     }

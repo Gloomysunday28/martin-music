@@ -6,6 +6,17 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
+      path: '/login',
+      name: 'MusicLogin',
+      meta: {
+        showHeader: false,
+        isLogin: true,
+        isIndex: true,
+        oDeep: 0
+      },
+      component: () => import('@/views/Login')
+    },
+    {
       path: '/',
       name: 'MusicHome',
       meta: {
@@ -18,15 +29,15 @@ export default new Router({
       component: () => import('@/views/Home')
     },
     {
-      path: '/login',
-      name: 'MusicLogin',
+      path: '/recommend',
+      name: 'MusicRecommend',
       meta: {
-        showHeader: false,
-        isLogin: true,
-        isIndex: true,
-        oDeep: 0
+        keepAlive: true,
+        showHeader: true,
+        oDeep: 2,
+        title: '每日推荐'
       },
-      component: () => import('@/views/Login')
+      component: () => import('@/views/Recommend')
     },
     {
       path: '/search',
@@ -50,6 +61,17 @@ export default new Router({
         title: '我的'
       },
       component: () => import('@/views/Person')
+    },
+    {
+      path: '/song/list',
+      name: 'MusicSongList',
+      meta: {
+        keepAlive: true,
+        showHeader: true,
+        oDeep: 4,
+        title: '歌单'
+      },
+      component: () => import('@/views/SongList')
     },
     {
       path: '/message',

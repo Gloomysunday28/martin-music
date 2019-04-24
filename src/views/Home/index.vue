@@ -14,7 +14,7 @@
       </div>
       <!-- 推荐菜单 -->
       <div class="c-music__menu" v-if="banner.length">
-        <div class="c-music__item">
+        <router-link class="c-music__item" :to="{name: 'MusicRecommend', query: {coverUrl: banner[0].imageUrl}}">
           <div class="c-menu__img__contain">
             <img class="c-menu__img" :src="banner[0].imageUrl" alt="">
           </div>
@@ -25,7 +25,7 @@
               听到外面狂风呼啸我就安心了, 又有理由宅看了,来自床上度日的飞翔的猪
             </p>
           </div>
-        </div>
+        </router-link>
         <div class="c-music__item">
           <div class="c-menu__img__contain">
             <img class="c-menu__img" :src="banner[1].imageUrl" alt="">

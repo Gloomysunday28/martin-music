@@ -23,6 +23,10 @@ const api = {
   userEvent: '/user/event', // 获取用户动态
   userFollows: '/user/follows', // 获取用户关注
   userFolloweds: '/user/followeds', // 获取用户粉丝
+  recommendByPerDay: '/recommend/songs', // 获取每日推荐歌曲
+
+  // 关注
+  followUser: '/follow', // 关注或者取关
 }
 
 export default {

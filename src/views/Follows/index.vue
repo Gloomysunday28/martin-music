@@ -6,7 +6,7 @@
         <img class="c-header__img" :src="usr.avatarUrl" alt="">
         <p class="c-follow__name">{{usr.nickname}}</p>
       </div>
-      <p class="c-follow--end">已关注</p>
+      <p class="c-follow--end">{{usr.followed ? '已关注' : '未关注'}}</p>
     </router-link>
   </div>
 </template>

@@ -2,24 +2,24 @@
   <div class="g-layout">
     <div class="c-person__card">
       <div class="c-person__msg">
-        <img class="c-person__header" :src="personal.avatarUrl" alt="">
+        <img class="c-person__header" :src="userInfo.avatarUrl" alt="">
         <div class="c-person__info">
-          <p class="c-person_nickname">{{personal.nickname}}</p>
-          <p>{{personal.signature}}</p>
+          <p class="c-person_nickname">{{userInfo.nickname}}</p>
+          <p>{{userInfo.signature}}</p>
         </div>
       </div>
       <div class="c-person__follow">
         <div class="c-person__follow c-person__follows">
           <router-link :to="{name: 'MusicFollows', query: {title: '关注'}}">
             <span class="c-follow__label">关注 </span>
-            <span class="c-follow__data">{{personal.follows}}</span>
+            <span class="c-follow__data">{{userInfo.follows}}</span>
           </router-link>
           <router-link :to="{name: 'MusicFollows', query: {title: '粉丝'}}">
             <span class="c-follow__label">粉丝 </span>
-            <span class="c-follow__data">{{personal.followeds}}</span>
+            <span class="c-follow__data">{{userInfo.followeds}}</span>
           </router-link>
         </div>
-        <div :class="['c-person__vip', {'c-person__vip--active': personal.vipType}]">
+        <div :class="['c-person__vip', {'c-person__vip--active': userInfo.vipType}]">
           VIP
         </div>
       </div>
@@ -36,7 +36,7 @@
           <span class="c-song__number">{{loveList.length}}</span>
         </div>
       </div>
-      <div class="c-person__list">
+      <router-link class="c-person__list" :to="{name: 'MusicSongList'}">
         <div class="c-song__list">
           <div class="c-song__img" v-for="play in playListCover" :key="play.id">
             <img class="c-song__cover" :src="play.coverImgUrl">
@@ -46,7 +46,7 @@
           <span class="c-song__label">歌单</span>
           <span class="c-song__number">{{playList.length}}</span>
         </div>
-      </div>
+      </router-link>
       <div class="c-person__list">
         <div class="c-song__list">
           <div class="c-song__img" v-for="play in recentListCover" :key="play.song.id">
@@ -78,8 +78,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   name: 'MusicPerson',
   data() {
@@ -87,31 +85,41 @@ export default {
       playList: [],
       loveList: [],
       recentList: [],
-      userSubCount: []
+      userSubCount: [],
+      userInfo: {}
     }
   },
-  computed: mapState({
-    personal: state => state.baseInfo.personal,
+  computed: {
     playListCover() {
       return [...this.playList].splice(0, 3)
     },
     recentListCover() {
       return [...this.recentList].splice(0, 3)
     },
-  }),
+  },
   mounted() {
     this.getPersonMsg()
   },
   activated() {
     this.$common.trigger('getStatus', '我的', 'title')
+    this.getUser()
   },
   methods: {
+    getUser() {
+      this.$http.get(this.$api.userInfo, {
+        params: {
+          uid: this.personal.userId
+        }
+      }).then(res => {
+        this.userInfo = res.data.profile
+      })
+    },
     getPersonMsg() {
       Promise.all([
         this.getUserInfo(),
         this.getLoveSong(),
         this.getRecentSong(),
-        this.getUserSubCount()
+        this.getUserSubCount(),
       ]).then(({0: playList, 1: loveList, 2: recentList, 3: userSubCount}) => {
         this.playList = playList.data.playlist
         this.loveList = loveList.data.ids
@@ -119,7 +127,7 @@ export default {
         this.userSubCount = userSubCount.data.mvCount
       })
     },
-    getUserInfo() {
+    getUserInfo() { // 歌曲
       return this.$http.get(this.$api.userSong, {
         params: {
           uid: this.personal.userId
@@ -143,7 +151,7 @@ export default {
     getUserSubCount() {
       return this.$http.get(this.$api.userSubCount)
     }
-  }
+  },
 }
 </script>
 

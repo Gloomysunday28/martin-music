@@ -32,6 +32,8 @@ export default {
 
 <style scoped>
   .c-home__search {
+    box-sizing: border-box;
     padding-left: 20px;
+    color: #ccc;
   }
 </style>

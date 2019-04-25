@@ -1,7 +1,7 @@
 <template>
   <div class="g-layout">
     <div class="c-recommend__cover">
-      <img :src="$route.query.coverUrl" alt="">
+      <img :src="cover" alt="">
     </div>
     <div class="c-recommend__songs">
       <div class="c-recommend__tags">
@@ -36,10 +36,12 @@ export default {
   },
   data() {
     return {
+      cover: '', // 封面
       recommends: []
     }
   },
   mounted() {
+    this.cover = this.$route.query.coverUrl
     this.getRecommend()
   },
   activated() {

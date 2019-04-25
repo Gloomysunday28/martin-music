@@ -59,11 +59,12 @@ export default {
       margin-top: 30px;
     }
     .c-add__song {
-      width: 100%;
+      width: 90%;
+      box-sizing: border-box;
       position: absolute;
       bottom: 40px;
       .c-add__btn {
-        width: 90%;
+        width: 100%;
         height: 80px;
         background: yellow;
         color: #333;

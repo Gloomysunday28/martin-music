@@ -1,5 +1,5 @@
 <template>
-  <input class="c-home__search" :type="type" :style="{width}" v-model="str">
+  <input class="c-home__search" :disabled="disabled" :type="type" :style="{width}" v-model="str">
 </template>
 
 <script>
@@ -15,16 +15,29 @@ export default {
       type: String,
       default: 'text',
       required: false
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
+    defaultValue: {
+      type: String,
+      default: '',
+      required: false
     }
   },
   data() {
     return {
-      str: ''
+      str: this.defaultValue
     }
   },
   watch: {
     str(e) {
       this.$emit('input', e)
+    },
+    defaultValue(e) {
+      this.str = e
     }
   }
 }

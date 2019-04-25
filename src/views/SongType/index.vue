@@ -18,6 +18,9 @@ export default {
   activated() {
     this.$common.trigger('getStatus', '', 'title')
   },
+  detivated() {
+    this.$common.removeListener('getStatus')
+  },
   methods: {
     getHotSongType() {
       this.$http.get(this.$api.playHot).then(res => {

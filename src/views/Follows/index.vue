@@ -23,6 +23,9 @@ export default {
     this.$common.trigger('getStatus', this.$route.query.title, 'title')
     this.getUserList()
   },
+  beforeDestory() {
+    this.$common.removeListener('getStatus')
+  },
   methods: {
     getUserList() {
       this.$http.get(this.$api[this.$route.query.title === '关注' ? 'userFollows' : 'userFolloweds'], {

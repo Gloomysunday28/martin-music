@@ -14,6 +14,8 @@ const api = {
 
   // 获取用户电台
   userInfo: '/user/detail', // 获取用户信息
+  userUpdate: '/user/update', // 更新用户信息
+
   userDj: '/user/dj',
   recommendSong: '/personalized', // 推荐歌单
   searchHot: '/search/hot', // 热搜,
@@ -29,6 +31,7 @@ const api = {
   recommendByPerDay: '/recommend/songs', // 获取每日推荐歌曲
   addSongList: '/playlist/create', // 新建歌单
   songUrl: '/song/url', // 歌曲地址
+  playListDetail: '/playlist/detail', // 歌单内容
 
   // 关注
   followUser: '/follow', // 关注或者取关

@@ -14,7 +14,7 @@
       </div>
       <!-- 推荐菜单 -->
       <div class="c-music__menu" v-if="banner.length">
-        <router-link class="c-music__item" :to="{name: 'MusicRecommend', query: {coverUrl: banner[0].imageUrl}}">
+        <router-link class="c-music__item" :to="{name: 'MusicPlayList', query: {coverUrl: banner[0].imageUrl}}">
           <div class="c-menu__img__contain">
             <img class="c-menu__img" :src="banner[0].imageUrl" alt="">
           </div>

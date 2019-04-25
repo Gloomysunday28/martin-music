@@ -29,15 +29,14 @@ export default new Router({
       component: () => import('@/views/Home')
     },
     {
-      path: '/recommend',
-      name: 'MusicRecommend',
+      path: '/play/list',
+      name: 'MusicPlayList',
       meta: {
-        keepAlive: true,
-        showHeader: true,
-        oDeep: 2,
-        title: '每日推荐'
+        keepAlive: false,
+        showHeader: false,
+        oDeep: 10,
       },
-      component: () => import('@/views/Recommend')
+      component: () => import('@/views/PlayList')
     },
     {
       path: '/search',
@@ -72,6 +71,16 @@ export default new Router({
         title: '我的'
       },
       component: () => import('@/views/Person')
+    },
+    {
+      path: '/person/info',
+      name: 'MusicPersonInfo',
+      meta: {
+        keepAlive: false,
+        showHeader: false,
+        oDeep: 4,
+      },
+      component: () => import('@/views/PersonInfo')
     },
     {
       path: '/song/list',

@@ -31,6 +31,9 @@ export default {
     this.$common.trigger('getStatus', '动态', 'title')
     this.getMessage()
   },
+  beforeDestory() {
+    this.$common.removeListener('getStatus')
+  },
   methods: {
     getMessage() {
       this.$http.get(this.$api.userEvent, {

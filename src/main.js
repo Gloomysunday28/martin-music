@@ -12,6 +12,7 @@ import Api from '@/api/api'
 import store from '@/store'
 import MusicInput from '@/components/App/Form/Input'
 import MusicTextArea from '@/components/App/Form/TextArea'
+import isApp from '@/utils/isApp'
 import '@/assets/css/common.less'
 import 'swiper/dist/css/swiper.css'
 // import '@/assets/css/resource.less'
@@ -35,6 +36,11 @@ Vue.use(Api)
 Vue.config.productionTip = false
 
 Vue.mixin({
+  data() {
+    return {
+      isApp
+    }
+  },
   computed: mapState({
     personal: state => state.baseInfo.personal,
   })

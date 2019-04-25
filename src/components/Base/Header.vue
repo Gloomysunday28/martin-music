@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header :class="['header', {'hader--isapp': isApp}]">
     <transition :name="headerConfig.slide">
       <div class="bar" v-bind:key="headerConfig.changeHeader">
         <div v-if="headerConfig.searchBox">
@@ -105,7 +105,7 @@ export default {
 <style scoped lang="less">
 .header {
   width: 100vw;
-  height: 110px;
+  // height: 110px;
   box-sizing: border-box;
   flex: none;
   display: flex;
@@ -114,7 +114,8 @@ export default {
   position: relative;
   background: #0D0D0D;
   color: #444;
-  // z-index: 20;
+  height: 120px;
+  padding-top: 30px;
   .bar {
     position: absolute;
     left: 0;

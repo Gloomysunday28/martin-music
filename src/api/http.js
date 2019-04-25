@@ -41,6 +41,7 @@ Axios.interceptors.response.use((response) => {
   return response
 }, (error) => {
   box.$loading(false)
+  if (error.code === 'ECONNABORTED') return void box.$toast('网络请求超时', {styles: {backgroud: '#fff'}})
   if (error.response) {
     switch (error.response.status) {
       case 400:

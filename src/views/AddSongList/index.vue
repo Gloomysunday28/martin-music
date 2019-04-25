@@ -7,7 +7,8 @@
     </div>
     <div class="c-song__add">
       <div class="c-song__form">
-        <label class="c-song__label">歌单名称</label>
+        <!-- <label class="c-song__label">歌单名称</label> -->
+        dsds
         <music-input v-model="name"/>
       </div>
       <div class="c-song__form">

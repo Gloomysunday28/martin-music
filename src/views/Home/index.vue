@@ -1,5 +1,7 @@
 <template>
   <div class="g-layout">
+    <a href="javascript:;" @click="tag = true">tab1</a>
+    <xx v-if="tag"/>
     <div class="c-home__contain" ref="contain">
       <router-link :to="{name: 'MusicSearch'}" class="c-home__search">
         <i class="iconfont">&#xe621;</i>
@@ -60,14 +62,25 @@
 import {mapState} from 'vuex'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
+import AA from '@/pages/a'
+
+const xx = () => ({
+  component: import('@/pages/a'),
+  loading: AA,
+  delay: 3000,
+  timeout: 3000
+})
+
 export default {
   name: 'MusicHome',
   components: {
     swiper,
-    swiperSlide
+    swiperSlide,
+    xx
   },
   data() {
     return {
+      tag: false,
       banner: [],
       swiperOption: {
         autoplay: true,
@@ -83,6 +96,9 @@ export default {
     personal: state => state.baseInfo.personal
   }),
   mounted() {
+    // setTimeout(va => {
+    //   this.tag = true
+    // }, 1000)
     this.getAllData()
   },
   activated() {

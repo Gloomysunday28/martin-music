@@ -111,7 +111,6 @@ export default {
     this.getUser()
   },
   deactivated() {
-    this.$common.removeListener('getStatus')
     this.$common.removeListener('changeHeaderIcon')
   },
   methods: {

@@ -33,9 +33,6 @@ export default {
   mounted() {
     this.$common.trigger('getStatus', '新建歌单', 'title')
   },
-  beforeDestory() {
-    this.$common.removeListener('getStatus')
-  },
   methods: {
     addSongList() {
       if (!this.name) return void this.$toast('请输入歌单名称')

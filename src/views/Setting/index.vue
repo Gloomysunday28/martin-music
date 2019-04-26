@@ -17,9 +17,6 @@ export default {
   activated() {
     this.$common.trigger('getStatus', '设置', 'title')
   },
-  deactivated() {
-    this.$common.removeListener('getStatus')
-  },
   methods: {
     logout() {
       this.$http.get(this.$api.loginOut).then(res => {

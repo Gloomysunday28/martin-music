@@ -53,9 +53,6 @@ export default {
   activated() {
     this.$common.trigger('getStatus', '歌单', 'title')
   },
-  deactivated() {
-    this.$common.removeListener('getStatus')
-  },
   methods: {
     getUserSongList() {
       this.$http.get(this.songTypes[this.type].url, {

@@ -49,7 +49,6 @@ export default {
     this.getRecommend()
   },
   deactivated() {
-    this.$common.removeListener('getStatus')
     const scrollTop = this.$refs.contain.scrollTop
     window.sessionStorage.setItem('scrollTop', scrollTop)
   },

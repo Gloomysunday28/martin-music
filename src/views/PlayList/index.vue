@@ -2,9 +2,10 @@
   <div class="g-layout">
     <div class="c-recommend__cover">
       <img :src="cover" alt="">
+      <span class="c-play__cover">{{$route.query.title || '每日推荐'}}</span>
     </div>
     <div class="c-recommend__songs">
-      <div class="c-recommend__tags">
+      <div class="c-recommend__tags" v-if="isRecoomend">
         <span class="c-recommend__tag"># 每日推荐 #</span>
         <span class="c-recommend__tag"># Vivo x27 #</span>
         <span class="c-recommend__tag"># 照亮你的美 #</span>
@@ -30,27 +31,39 @@
 import MusicList from '@/pages/MusicList'
 
 export default {
-  name: 'MusicRecomment',
+  name: 'MusicPlayList',
   components: {
     MusicList
   },
   data() {
     return {
       cover: '', // 封面
+      isRecoomend: false,
       recommends: []
     }
   },
   mounted() {
+    this.isRecoomend = !this.$route.query.title
+    this.$common.trigger('getStatus', this.$route.query.title || '每日推荐', 'title')
     this.cover = this.$route.query.coverUrl
     this.getRecommend()
   },
-  activated() {
-    this.$common.trigger('getStatus', '每日推荐', 'title')
+  beforeDestory() {
+    this.$common.removeListener('getStatus')
   },
   methods: {
     getRecommend() {
-      this.$http.get(this.$api.recommendByPerDay).then(res => {
-        this.recommends = res.data.recommend
+      this.$http.get(this.$api[this.isRecoomend ? 'recommendByPerDay' : 'playListDetail'], {
+        ...!this.isRecoomend && {
+          params: {
+            id: this.$route.query.id
+          }
+        }
+      }).then(res => {
+        this.recommends = res.data.recommend || res.data.playlist.tracks
+        if (!this.isRecoomend) {
+          this.cover = res.data.playlist.coverImgUrl
+        }
       })
     }
   }
@@ -58,6 +71,19 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .c-play__cover {
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 55px;
+    transform: translateX(-50%);
+    font-size: 36px;
+    text-align: center;
+    color: #fff;
+  }
+  .c-recommend__cover img {
+    width: 100%;
+  }
   .c-recommend__songs {
     padding: 0 30px;
     .c-recommend__tags {

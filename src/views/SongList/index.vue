@@ -13,13 +13,24 @@
       </div>
     </div>
     <div class="c-songlist__list">
-      <div class="c-list__item" v-for="song in songLists" :key="song.id">
+      <router-link
+        class="c-list__item"
+        v-for="song in songLists"
+        :key="song.id"
+        :to="{
+          name: 'MusicPlayList',
+          query: {
+            title: song.name,
+            id: song.id
+          }
+        }"
+      >
         <img class="c-list__cover" :src="song.coverImgUrl" alt="">
         <div class="c-list__info">
           <p class="c-list__name">{{song.name}}</p>
           <p>{{song.trackCount}}首</p>
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -37,6 +48,9 @@ export default {
   },
   activated() {
     this.$common.trigger('getStatus', '歌单', 'title')
+  },
+  detivated() {
+    this.$common.removeListener('getStatus')
   },
   methods: {
     getUserSongList() {

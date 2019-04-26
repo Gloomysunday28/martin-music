@@ -1,6 +1,6 @@
 <template>
   <div class="g-layout">
-    <div class="c-person__card">
+    <router-link class="c-person__card" :to="{name: 'MusicPersonInfo'}">
       <div class="c-person__msg">
         <img class="c-person__header" :src="userInfo.avatarUrl" alt="">
         <div class="c-person__info">
@@ -23,7 +23,7 @@
           VIP
         </div>
       </div>
-    </div>
+    </router-link>
     <div class="c-person__songs">
       <div class="c-person__list">
         <div class="c-song__list">
@@ -103,6 +103,9 @@ export default {
   activated() {
     this.$common.trigger('getStatus', '我的', 'title')
     this.getUser()
+  },
+  detivated() {
+    this.$common.removeListener('getStatus')
   },
   methods: {
     getUser() {

@@ -2,10 +2,10 @@
   <div class="c-music__list">
     <router-link class="c-music__item" :to="{name: 'MusicPlaySong', params: {id: music.id}}" v-for="music in musicData" :key="music.id">
       <div class="c-music__msg">
-        <img class="c-music__img" :src="music.album.picUrl" alt>
+        <img class="c-music__img" :src="getCover(music)" alt>
         <div class="c-music__info">
-          <p>{{music.album.name}}</p>
-          <p class="c-music__creator">{{music.album.artists[0].name}}</p>
+          <p>{{getName(music)}}</p>
+          <p class="c-music__creator">{{getCreator(music)}}</p>
         </div>
       </div>
       <div class="c-music__option">
@@ -23,6 +23,24 @@ export default {
       type: Array,
       default: () => [],
       required: false,
+    }
+  },
+  methods: {
+    getCover(music) {
+      const cover = music.album ? music.album.picUrl : music.al.picUrl
+
+      return cover
+    },
+    getName(music) {
+      const name = music.album ? music.album.name : music.al.name
+
+      return name
+    },
+    getCreator(music) {
+      const data = music.album ? music.album.artists : music.ar
+
+      const name = data.map(val => val.name)
+      return name.join('&')
     }
   }
 }

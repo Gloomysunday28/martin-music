@@ -43,6 +43,7 @@ export default {
   border: none;
   resize: none;
   width: 100%;
+  font-size: 30px;
   -webkit-user-select: text;
   outline: none;
   color: #fff;

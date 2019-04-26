@@ -47,6 +47,7 @@ export default {
   .c-home__search {
     box-sizing: border-box;
     padding-left: 20px;
-    color: #ccc;
+    font-size: 30px;
+    color: #fff;
   }
 </style>

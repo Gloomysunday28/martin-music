@@ -32,7 +32,7 @@ const router = new Router({
       path: '/play/list',
       name: 'MusicPlayList',
       meta: {
-        keepAlive: false,
+        keepAlive: true,
         showHeader: false,
         oDeep: 10,
       },

@@ -25,7 +25,7 @@
       </div>
     </router-link>
     <div class="c-person__songs">
-      <div class="c-person__list">
+      <router-link class="c-person__list" :to="{name: 'MusicSongList', query: {type: 1}}">
         <div class="c-song__list">
           <div class="c-song__img"></div>
           <div class="c-song__img"></div>
@@ -35,8 +35,8 @@
           <span class="c-song__label">喜欢</span>
           <span class="c-song__number">{{loveList.length}}</span>
         </div>
-      </div>
-      <router-link class="c-person__list" :to="{name: 'MusicSongList'}">
+      </router-link>
+      <router-link class="c-person__list" :to="{name: 'MusicSongList', query: {type: 0}}">
         <div class="c-song__list">
           <div class="c-song__img" v-for="play in playListCover" :key="play.id">
             <img class="c-song__cover" :src="play.coverImgUrl">
@@ -110,7 +110,7 @@ export default {
     this.$common.trigger('changeHeaderIcon', '#ccc')
     this.getUser()
   },
-  detivated() {
+  deactivated() {
     this.$common.removeListener('getStatus')
     this.$common.removeListener('changeHeaderIcon')
   },

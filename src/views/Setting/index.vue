@@ -17,7 +17,7 @@ export default {
   activated() {
     this.$common.trigger('getStatus', '设置', 'title')
   },
-  detivated() {
+  deactivated() {
     this.$common.removeListener('getStatus')
   },
   methods: {

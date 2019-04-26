@@ -1,5 +1,5 @@
 <template>
-  <div class="g-layout">
+  <div class="g-layout" ref="contain">
     <div class="c-recommend__cover">
       <img :src="cover" alt="">
       <span class="c-play__cover">{{$route.query.title || '每日推荐'}}</span>
@@ -42,14 +42,16 @@ export default {
       recommends: []
     }
   },
-  mounted() {
+  activated() {
     this.isRecoomend = !this.$route.query.title
     this.$common.trigger('getStatus', this.$route.query.title || '每日推荐', 'title')
     this.cover = this.$route.query.coverUrl
     this.getRecommend()
   },
-  beforeDestory() {
+  deactivated() {
     this.$common.removeListener('getStatus')
+    const scrollTop = this.$refs.contain.scrollTop
+    window.sessionStorage.setItem('scrollTop', scrollTop)
   },
   methods: {
     getRecommend() {
@@ -65,6 +67,15 @@ export default {
           this.cover = res.data.playlist.coverImgUrl
         }
       })
+    }
+  },
+  watch: {
+    $route(n, v) {
+      if (window.sessionStorage.scrollTop) {
+        this.$nextTick().then(_ => {
+          this.$refs.contain.scrollTop = n.meta.oDeep > v.meta.oDeep ? 0 : window.sessionStorage.scrollTop
+        })
+      }
     }
   }
 }

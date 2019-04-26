@@ -1,6 +1,6 @@
 <template>
   <div class="g-layout">
-    <div class="c-home__contain">
+    <div class="c-home__contain" ref="contain">
       <router-link :to="{name: 'MusicSearch'}" class="c-home__search">
         <i class="iconfont">&#xe621;</i>
       </router-link>
@@ -39,7 +39,7 @@
       <div class="c-music__recommend">
         <b class="c-recommend__label">推荐歌单</b>
         <div class="c-recommend">
-          <div class="c-music__item" v-for="rem in recommends" :key="rem.id">
+          <router-link class="c-music__item" v-for="rem in recommends" :key="rem.id" :to="{name: 'MusicPlayList', query: {coverUrl: rem.picUrl, title: rem.name, id: rem.id}}">
             <div class="c-menu__img__contain c-menu__recommend__recommend">
               <img class="c-menu__img" v-lazy="rem.picUrl" alt="">
             </div>
@@ -49,7 +49,7 @@
                 播放次数: {{rem.playCount}}
               </p>
             </div>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -85,6 +85,17 @@ export default {
   mounted() {
     this.getAllData()
   },
+  activated() {
+    if (window.sessionStorage.scrollTop) {
+      this.$nextTick().then(_ => {
+        this.$refs.contain.scrollTop = window.sessionStorage.scrollTop
+      })
+    }
+  },
+  deactivated() {
+    const scrollTop = this.$refs.contain.scrollTop
+    window.sessionStorage.setItem('scrollTop', scrollTop)
+  },
   methods: {
     getAllData() {
       Promise.all([
@@ -108,13 +119,6 @@ export default {
 <style scoped lang="less">
   .swiper-container {
     margin-top: 20px;
-    // .swiper-wrapper {
-    //   display: flex;
-    //   // flex-wrap: wrap;
-    //   .swiper-slide {
-    //     width: 100%;
-    //   }
-    // }
   }
   .g-layout {
     display: flex;

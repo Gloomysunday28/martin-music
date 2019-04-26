@@ -13,53 +13,57 @@
       </div>
     </div>
     <div class="c-songlist__list">
-      <router-link
-        class="c-list__item"
-        v-for="song in songLists"
-        :key="song.id"
-        :to="{
-          name: 'MusicPlayList',
-          query: {
-            title: song.name,
-            id: song.id
-          }
-        }"
-      >
-        <img class="c-list__cover" :src="song.coverImgUrl" alt="">
-        <div class="c-list__info">
-          <p class="c-list__name">{{song.name}}</p>
-          <p>{{song.trackCount}}首</p>
-        </div>
-      </router-link>
+      <component :is="songTypes[type].comp" :musicData="songLists"/>
     </div>
   </div>
 </template>
 
 <script>
+import SongList from '@/pages/SongList'
+import MusicList from '@/pages/MusicList'
+
 export default {
   name: 'MusicSongList',
+  components: {
+    'page-song-list': SongList, // 歌单
+    'page-music-list': MusicList, // 歌曲
+  },
   data() {
     return {
+      songTypes: {
+        0: {
+          label: ['自建'],
+          comp: 'page-song-list',
+          url: this.$api.userSong
+        },
+        1: {
+          label: ['歌曲'],
+          comp: 'page-music-list',
+          url: this.$api.loveSongList
+        },
+      },
       songLists: [], // 歌单
+      type: 0
     }
   },
   mounted() {
+    this.type = this.$route.query.type
     this.getUserSongList()
   },
   activated() {
     this.$common.trigger('getStatus', '歌单', 'title')
   },
-  detivated() {
+  deactivated() {
     this.$common.removeListener('getStatus')
   },
   methods: {
     getUserSongList() {
-      this.$http.get(this.$api.userSong, {
+      this.$http.get(this.songTypes[this.type].url, {
         params: {
           uid: this.personal.userId
         }
       }).then(res => {
-        this.songLists = res.data.playlist
+        this.songLists = res.data.playlist || res.data.songs
       })
     }
   }
@@ -80,24 +84,6 @@ export default {
         .iconfont {
           font-size: 42px;
           margin-right: 20px;
-        }
-      }
-    }
-    .c-list__item {
-      margin-bottom: 40px;
-      display: flex;
-      .c-list__cover {
-        height: 100px;
-        width: 100px;
-      }
-      .c-list__info {
-        margin-left: 20px;
-        font-size: 24px;
-        padding-top: 10px;
-        .c-list__name {
-          margin-bottom: 12px;
-          color: #ccc;
-          font-size: 26px;
         }
       }
     }

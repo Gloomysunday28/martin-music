@@ -31,7 +31,7 @@ export default {
     border-radius: 50px 50px 0 0;
     min-height: 100px;
     background: #000;
-    box-shadow: -10px 5px 20px #999;
+    box-shadow: -10px 0px 20px yellow;
     .m-picker__contain {
       position: relative;
       left: 0;

@@ -44,7 +44,7 @@ export default {
       this.$http.get(this.$api.followUser, {
         params: {
           id: this.$route.params.uid,
-          t: (1 - +atten)
+          t: (1 - +atten),
         }
       }).then(res => {
         if (res.data.code === 200) {

@@ -3,6 +3,17 @@ import Router from '@/router'
 import axios from 'axios'
 import qs from 'qs'
 
+const noCache = [
+  '/login/cellphone',
+  '/user/detail',
+  '/user/follows',
+  '/user/followeds',
+  '/follow',
+  '/playlist/create',
+  '/user/playlist',
+  '/user/update',
+]
+
 const box = new Vue()
 
 const Axios = axios.create({
@@ -20,6 +31,9 @@ const Axios = axios.create({
 
 Axios.interceptors.request.use((config) => {
   box.$loading(true)
+  if (noCache.includes(config.url)) {
+    config.url += (config.url.includes('?') ? '&' : '?') + `timestamp=${+new Date()}` // 网易云音乐api为了避免高频ip请求错误,设置了2分钟的时间不去请求网易云服务器, 如果设置不缓存的话那么设置teimestamp
+  }
   return config
 }, (error) => {
   return Promise.reject(error)

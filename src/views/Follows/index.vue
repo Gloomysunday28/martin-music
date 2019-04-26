@@ -30,7 +30,8 @@ export default {
     getUserList() {
       this.$http.get(this.$api[this.$route.query.title === '关注' ? 'userFollows' : 'userFolloweds'], {
         params: {
-          uid: this.$store.state.baseInfo.personal.userId
+          uid: this.$store.state.baseInfo.personal.userId,
+          timestamp: +new Date()
         }
       }).then(res => {
         this.userList = res.data.follow || res.data.followeds

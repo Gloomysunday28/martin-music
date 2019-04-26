@@ -81,7 +81,7 @@ export default {
     display: flex;
     flex-direction: column;
     .iconfont {
-      font-size: 40px;
+      font-size: 32px;
     }
     .c-three__contain {
       width: 38px;

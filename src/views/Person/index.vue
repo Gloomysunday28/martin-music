@@ -2,7 +2,7 @@
   <div class="g-layout">
     <router-link class="c-person__card" :to="{name: 'MusicPersonInfo'}">
       <div class="c-person__msg">
-        <img class="c-person__header" :src="userInfo.avatarUrl" alt="">
+        <img class="c-person__header" :src="userInfo.avatarUrl || require('@/assets/img/loading-ps.jpg')" alt="">
         <div class="c-person__info">
           <p class="c-person_nickname">{{userInfo.nickname}}</p>
           <p>{{userInfo.signature}}</p>
@@ -98,14 +98,21 @@ export default {
     },
   },
   mounted() {
+    this.$common.listen('changePageStatus', () => {
+      this.$router.push({
+        name: 'MusicSetting'
+      })
+    })
     this.getPersonMsg()
   },
   activated() {
     this.$common.trigger('getStatus', '我的', 'title')
+    this.$common.trigger('changeHeaderIcon', '#ccc')
     this.getUser()
   },
   detivated() {
     this.$common.removeListener('getStatus')
+    this.$common.removeListener('changeHeaderIcon')
   },
   methods: {
     getUser() {

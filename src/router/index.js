@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/login',
@@ -68,9 +68,23 @@ export default new Router({
         keepAlive: true,
         showHeader: true,
         oDeep: 3,
-        title: '我的'
+        title: '我的',
+        extra: {
+          icon: '&#xe60d;'
+        }
       },
       component: () => import('@/views/Person')
+    },
+    {
+      path: '/setting',
+      name: 'MusicSetting',
+      meta: {
+        keepAlive: true,
+        showHeader: true,
+        oDeep: 4,
+        title: '设置',
+      },
+      component: () => import('@/views/Setting')
     },
     {
       path: '/person/info',
@@ -150,3 +164,5 @@ export default new Router({
     }
   ]
 })
+
+export default router

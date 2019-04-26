@@ -31,7 +31,7 @@
           <div class="c-music__title">
             DISCOVER
           </div>
-          <img class="c-person__header" :src="personal.avatarUrl" alt="" @click="$router.push({name: 'MusicPerson'})">
+          <img class="c-person__header" :src="personal.avatarUrl || require('@/assets/img/loading-ps.jpg')" alt="" @click="$router.push({name: 'MusicPerson'})">
         </div>
       </div>
     </transition>
@@ -228,6 +228,7 @@ export default {
     box-sizing: border-box;
     color: #ccc;
     padding-left: 80px;
+    font-size: 30px;
   }
 }
 </style>

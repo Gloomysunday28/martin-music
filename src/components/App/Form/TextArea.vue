@@ -10,16 +10,24 @@ export default {
       type: [String, Number],
       default: 30,
       required: false
+    },
+    value: {
+      type: String,
+      default: '',
+      required: false
     }
   },
   data() {
     return {
-      remark: ''
+      remark: this.value
     }
   },
   watch: {
     remark(e) {
       this.$emit('input', e)
+    },
+    value(e) {
+      this.remark = e
     }
   }
 }

@@ -2,13 +2,13 @@
   <div class="g-layout">
     <div class="c-music__event" v-for="msg in message" :key="msg.id">
       <div class="c-music__avatUrl">
-        <img class="c-person__header" :src="msg.user.avatarUrl" />
+        <img class="c-person__header" v-lazy="msg.user.avatarUrl" />
       </div>
       <div class="c-event__info">
         <p class="c-event__user">{{msg.user.nickname}} {{msg.info.commentThread.resourceTitle}}</p>
         <p class="c-event__user c-event__act" v-if="msg.actName"># {{msg.actName}} #</p>
         <div class="c-event__event">
-          <img class="c-event__img" :src="msg.type === 18 ? getDiffEvent(msg).album.picUrl : getDiffEvent(msg).coverImgUrl"/>
+          <img class="c-event__img" v-lazy="msg.type === 18 ? getDiffEvent(msg).album.picUrl : getDiffEvent(msg).coverImgUrl"/>
           <div class="c-event__music">
             <p v-html="getEvent(msg)"></p>
             <p class="c-music__creator">{{getCreator(msg)}}</p>

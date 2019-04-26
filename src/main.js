@@ -13,6 +13,7 @@ import store from '@/store'
 import MusicInput from '@/components/App/Form/Input'
 import MusicTextArea from '@/components/App/Form/TextArea'
 import isApp from '@/utils/isApp'
+import VueLazyload from 'vue-lazyload'
 import '@/assets/css/common.less'
 import 'swiper/dist/css/swiper.css'
 // import '@/assets/css/resource.less'
@@ -44,6 +45,13 @@ Vue.mixin({
   computed: mapState({
     personal: state => state.baseInfo.personal,
   })
+})
+
+Vue.use(VueLazyload, { // 图片懒加载
+  preLoad: 1.3,
+  loading: require('@/assets/img/loading-ps.jpg'),
+  attempt: 1,
+  listenEvents: [ 'scroll' ]
 })
 
 /* eslint-disable no-new */

@@ -16,7 +16,7 @@
       <div class="c-music__menu" v-if="banner.length">
         <router-link class="c-music__item" :to="{name: 'MusicPlayList', query: {coverUrl: banner[0].imageUrl}}">
           <div class="c-menu__img__contain">
-            <img class="c-menu__img" :src="banner[0].imageUrl" alt="">
+            <img class="c-menu__img" v-lazy="banner[0].imageUrl" alt="">
           </div>
           <div class="c-menu__img__contain">
             <p class="c-menu__text">20+每日推荐</p>
@@ -28,10 +28,10 @@
         </router-link>
         <div class="c-music__item">
           <router-link class="c-menu__img__contain" :to="{name: 'MusicSongType'}">
-            <img class="c-menu__img" :src="banner[1].imageUrl" alt="">
+            <img class="c-menu__img" v-lazy="banner[1].imageUrl" alt="">
           </router-link>
           <div class="c-menu__img__contain">
-            <img class="c-menu__img" :src="banner[2].imageUrl" alt="">
+            <img class="c-menu__img" v-lazy="banner[2].imageUrl" alt="">
           </div>
         </div>
       </div>
@@ -40,8 +40,8 @@
         <b class="c-recommend__label">推荐歌单</b>
         <div class="c-recommend">
           <div class="c-music__item" v-for="rem in recommends" :key="rem.id">
-            <div class="c-menu__img__contain">
-              <img class="c-menu__img" :src="rem.picUrl" alt="">
+            <div class="c-menu__img__contain c-menu__recommend__recommend">
+              <img class="c-menu__img" v-lazy="rem.picUrl" alt="">
             </div>
             <div class="c-menu__img__contain">
               <p class="c-menu__name">{{rem.name}}</p>
@@ -159,6 +159,9 @@ export default {
       flex: 1;
       height: 220px;
       margin: 0 10px;
+      &.c-menu__recommend__recommend {
+        height: 250px;
+      }
       .c-menu__name {
         color: #fff;
         font-size: 32px;

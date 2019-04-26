@@ -2,7 +2,7 @@
   <div class="c-music__list">
     <router-link class="c-music__item" :to="{name: 'MusicPlaySong', params: {id: music.id}}" v-for="music in musicData" :key="music.id">
       <div class="c-music__msg">
-        <img class="c-music__img" :src="getCover(music)" alt>
+        <img class="c-music__img" v-lazy="getCover(music)" alt>
         <div class="c-music__info">
           <p>{{getName(music)}}</p>
           <p class="c-music__creator">{{getCreator(music)}}</p>

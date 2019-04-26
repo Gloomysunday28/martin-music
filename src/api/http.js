@@ -48,6 +48,7 @@ Axios.interceptors.response.use((response) => {
       case 401:
       case 408:
       case 500:
+      case 505:
         box.$toast(error.response.data.msg || '请求失败', {styles: {backgroud: '#fff'}})
         return error.response
       case 502:

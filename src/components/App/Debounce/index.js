@@ -12,6 +12,7 @@ const debounce = (fn, delayTime) => {
 
 export default {
   name: 'MusicDebounce',
+  abstract: true, // 抽象组件
   props: {
     time: {
       type: [String, Number],

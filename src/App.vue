@@ -153,6 +153,7 @@ export default {
   display: flex;
   flex-direction: column;
   background: #0D0D0D;
+  touch-action: none;
   // background: rgba(0, 0, 0, .9);
 }
 .page-header--import {

@@ -3,19 +3,26 @@
     <div class="c-music__play" v-if="!isPlay">
       <i class="iconfont">&#xe601;</i>
     </div>
+    <music-canvas :width="width" :height="height"/>
     <div class="c-music__control" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"></div>
     <audio class="m-music__play" :src="src" muted="muted" controls="controls" ref="musicPlay"></audio>
   </div>
 </template>
 
 <script>
+import MusicCanvas from '@/pages/MusicCanvas'
+
 export default {
   name: 'MusicPlay',
+  components: {
+    MusicCanvas
+  },
   data() {
     return {
       isPlay: false,
       src: '',
       width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight,
       start: 0,
       end: 0
     }
@@ -68,7 +75,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
   .m-music__play {
     width: 100%;
     position: absolute;
@@ -85,6 +92,8 @@ export default {
     right: 0;
     bottom: 30px;
     margin: auto;
+    color: #fff;
+    z-index: 10;
   }
   .c-music__control {
     width: 100%;
@@ -97,5 +106,11 @@ export default {
   }
   .iconfont {
     font-size: 150px;
+  }
+  .c-music__bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
   }
 </style>

@@ -47,6 +47,19 @@ Vue.mixin({
   })
 })
 
+// const requireComponent = require.context(
+//   // 其组件目录的相对路径
+//   '@/components',
+//   // 是否查询其子目录
+//   true,
+//   // 匹配基础组件文件名的正则表达式
+//   /Header[A-Z]\w+\.(vue|js)$/
+// )
+
+// requireComponent.keys().forEach(fileName => {
+//   console.log(requireComponent(fileName))
+// })
+
 Vue.use(VueLazyload, { // 图片懒加载
   preLoad: 1.3,
   loading: require('@/assets/img/loading-ps.jpg'),

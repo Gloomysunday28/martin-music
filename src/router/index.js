@@ -1,22 +1,22 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AAA from '@/pages/a'
+import PageLoading from '@/components/Base/PageLoading'
 
 function lazyLoadView (AsyncView) {
   const AsyncHandler = () => ({
     // 需要加载的组件 (应该是一个 `Promise` 对象)
     component: AsyncView,
     // 异步组件加载时使用的组件
-    loading: AAA,
+    loading: PageLoading,
     // 加载失败时使用的组件
     // 展示加载时组件的延时时间。默认值是 200 (毫秒)
-    delay: 1000,
+    delay: 200,
     // 如果提供了超时时间且组件加载也超时了，
     // 则使用加载失败时使用的组件。默认值是：`Infinity`
     timeout: 10000
   })
   return Promise.resolve({
-    functional: true,
+    functional: true, // 无状态组件
     render (h, { data, children }) {
       return h(AsyncHandler, data, children)
     }

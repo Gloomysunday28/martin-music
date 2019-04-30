@@ -3,7 +3,7 @@
     <div class="c-music__play" v-if="!isPlay">
       <i class="iconfont">&#xe601;</i>
     </div>
-    <music-canvas :width="width" :height="height"/>
+    <music-canvas :width="width" :height="height" ref="canvas"/>
     <div class="c-music__control" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"></div>
     <audio class="m-music__play" :src="src" muted="muted" controls="controls" ref="musicPlay"></audio>
   </div>
@@ -61,6 +61,8 @@ export default {
         music.pause()
         this.isPlay = false
       }
+
+      this.$refs.canvas[this.isPlay ? 'startWave' : 'stopWave']()
     },
     getSongUrl() {
       this.$http.get(this.$api.songUrl, {

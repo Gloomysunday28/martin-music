@@ -14,9 +14,9 @@ import MusicInput from '@/components/App/Form/Input'
 import MusicTextArea from '@/components/App/Form/TextArea'
 import isApp from '@/utils/isApp'
 import VueLazyload from 'vue-lazyload'
+import log from '@/utils/log'
 import '@/assets/css/common.less'
 import 'swiper/dist/css/swiper.css'
-// import '@/assets/css/resource.less'
 import '@/assets/font/iconfont.css'
 
 const components = [MusicInput, MusicTextArea]
@@ -33,6 +33,7 @@ Vue.use(Dialog)
 Vue.use(Bus)
 Vue.use(HTTP)
 Vue.use(Api)
+Vue.use(log)
 
 Vue.config.productionTip = false
 

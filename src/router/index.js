@@ -177,7 +177,7 @@ const router = new Router({
       path: '/play/song/:id',
       name: 'MusicPlaySong',
       meta: {
-        keepAlive: false,
+        keepAlive: true,
         showHeader: false,
         oDeep: 99,
         title: ''

@@ -52,7 +52,7 @@ export default {
       display: flex;
       justify-content: space-between;
       height: 100px;
-      margin: 30px 0;
+      margin: 50px 0;
       .c-music__msg {
         display: flex;
       }

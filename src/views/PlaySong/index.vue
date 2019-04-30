@@ -13,7 +13,7 @@
 import MusicCanvas from '@/pages/MusicCanvas'
 
 export default {
-  name: 'MusicPlay',
+  name: 'MusicPlaySong',
   components: {
     MusicCanvas
   },
@@ -27,7 +27,7 @@ export default {
       end: 0
     }
   },
-  mounted() {
+  activated() {
     this.getSongUrl()
   },
   methods: {

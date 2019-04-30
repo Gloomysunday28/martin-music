@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       ctx: null,
+      waveBg: `rgba(${Math.random() * 255} ,${Math.random() * 255}, ${Math.random() * 255}, 1)`,
       waves: [],
       wavesNum: 50,
       waveWidth: this.width / 50,
@@ -48,13 +49,11 @@ export default {
           draw() {
             if (this.ih < 0 || this.ih > self.height / 5) {
               this.speed = -this.speed
-              self.ctx.fillStyle = `rgba(
-                ${Math.random() * 255},
-                ${Math.random() * 255},
-                ${Math.random() * 255},
-                1
-              )`
             }
+            var grd = self.ctx.createLinearGradient(0, 0, self.width, self.height)
+            grd.addColorStop(0, self.waveBg)
+            grd.addColorStop(1, 'white')
+            self.ctx.fillStyle = grd
             this.ih += this.speed
             self.ctx.beginPath()
             self.ctx.rect(this.ix, self.height - this.ih, this.w, this.ih)
@@ -65,13 +64,19 @@ export default {
         this.waves.push({...wave})
       }
 
-      requestAnimation(this.drawWave)
+      this.startWave()
     },
     drawWave() {
       this.ctx.clearRect(0, 0, this.width, this.height)
       this.waves.forEach(wv => {
         wv.draw()
       })
+      requestAnimation(this.drawWave)
+    },
+    stopWave() {
+      cancelAnimationFrame(this.drawWave)
+    },
+    startWave() {
       requestAnimation(this.drawWave)
     }
   }

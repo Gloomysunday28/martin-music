@@ -84,9 +84,7 @@ export default {
     personal: state => state.baseInfo.personal
   }),
   mounted() {
-    // setTimeout(va => {
-    //   this.tag = true
-    // }, 1000)
+    console.log(this)
     this.getAllData()
   },
   activated() {

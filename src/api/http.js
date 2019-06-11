@@ -17,7 +17,7 @@ const noCache = [
 const box = new Vue()
 
 const Axios = axios.create({
-  baseURL: 'http://127.0.0.1:3000',
+  baseURL: 'http://127.0.0.1:3001',
   // baseURL: 'http://111.231.55.237:3000',
   timeout: 10000,
   withCredentials: true,

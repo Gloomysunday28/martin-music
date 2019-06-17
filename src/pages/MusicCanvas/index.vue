@@ -77,6 +77,7 @@ export default {
       cancelAnimationFrame(this.drawWave)
     },
     startWave() {
+      cancelAnimationFrame(this.drawWave)
       requestAnimation(this.drawWave)
     }
   }

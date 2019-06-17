@@ -300,3 +300,21 @@ input:focus {
   width: 100vw;
   height: 100vh;
 }
+
+.clip-enter-active {
+  animation: clip-paths .5s ease-in-out;
+}
+
+.clip-leave-active {
+  z-index: 500;
+  animation: clip-paths .5s ease-in-out reverse;
+}
+
+@keyframes clip-paths {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <div class="c-music__list">
-    <router-link class="c-music__item" :to="{name: 'MusicPlaySong', params: {id: music.id}}" v-for="music in musicData" :key="music.id">
+    <div class="c-music__item" v-for="music in musicData" :key="music.id" @click="openMusic(music.id)">
       <div class="c-music__msg">
         <img class="c-music__img" v-lazy="getCover(music)" alt>
         <div class="c-music__info">
@@ -11,7 +11,7 @@
       <div class="c-music__option">
         <i class="iconfont">&#xe637;</i>
       </div>
-    </router-link>
+    </div>
   </div>
 </template>
 
@@ -26,6 +26,9 @@ export default {
     }
   },
   methods: {
+    openMusic(id) {
+      this.$common.trigger('listenMusic', id, true)
+    },
     getCover(music) {
       const cover = music.album ? music.album.picUrl : music.al.picUrl
 

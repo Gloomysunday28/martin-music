@@ -151,7 +151,7 @@ export default {
     margin-top: 10px;
     padding: 0 20px;
     flex: 1;
-    touch-action: none;
+    // touch-action: none;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }

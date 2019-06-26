@@ -42,7 +42,7 @@
 <script>
 import Extra from './HeaderExtra'
 import {mapState} from 'vuex'
-import Debounce from '../App/Debounce'
+import Debounce from '@/hoc/Debounce'
 
 export default {
   name: 'BaseHeader',

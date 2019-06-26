@@ -330,7 +330,7 @@ export default {
     text-align: center;
     line-height: 100px;
     position: absolute;
-    left: 60px;
+    left: 40px;
     top: 50%;
     transform: translateY(-50%);
     width: 300px;

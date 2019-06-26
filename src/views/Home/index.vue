@@ -84,7 +84,6 @@ export default {
     personal: state => state.baseInfo.personal
   }),
   mounted() {
-    console.log(this)
     this.getAllData()
   },
   activated() {

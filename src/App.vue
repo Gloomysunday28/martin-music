@@ -5,7 +5,7 @@
         <i class="iconfont back-icon">&#xe61b;</i>
       </span>
     </transition>
-    <base-header :class="{'page-header--import': showImportHeader}" :header-config="headerConfig" :bg-color="bgColor"/>
+    <base-header :class="{'page-header--import': showImportHeader, 'page-header__none': !showHeader}" :header-config="headerConfig" :bg-color="bgColor"/>
     <div class="g-container">
       <transition :name="fade">
         <keep-alive :exclude="keepAlive">
@@ -242,10 +242,6 @@ export default {
   z-index: 10;
   display: flex;
   flex-direction: column;
-  &.page-header--none {
-    position: fixed;
-    z-index: 200;
-  }
   &.page-header--show {
     z-index: 200;
   }
@@ -362,5 +358,9 @@ export default {
     height: 100%;
     margin: 0 5px;
     background: #fff;
+  }
+  .page-header__none {
+    height: 0 !important;
+    padding: 0 !important;
   }
 </style>

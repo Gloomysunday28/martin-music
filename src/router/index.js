@@ -56,6 +56,7 @@ const router = new Router({
       meta: {
         keepAlive: true,
         showHeader: false,
+        title: '回忆',
         oDeep: 10,
       },
       component: () => import('@/views/PlayList')

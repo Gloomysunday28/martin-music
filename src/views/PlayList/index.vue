@@ -3,6 +3,18 @@
     <div class="c-recommend__header" ref="header">
       <span class="c-play__cover">{{$route.query.title || '每日推荐'}}</span>
     </div>
+    <div class="c-person__info--slide" ref="person">
+      <div class="c-person__info">
+        <img class="c-person__avata" :src="personal.avatarUrl" alt="">
+        <span>{{personal.nickname}}</span>
+      </div>
+      <div class="c-recommend__list__total">
+        <div class="c-recommend__play">
+          <i class="iconfont">&#xeb6d;</i>
+        </div>
+        {{recommends.length}}
+      </div>
+    </div>
     <div class="c-recommend__cover" ref="cover" :style="{backgroundImage: `url(${cover})`, backgroundRepeat: ' no-repeat'}">
     </div>
     <div class="c-mask" ref="mask"></div>
@@ -13,17 +25,19 @@
           <span class="c-recommend__tag"># Vivo x27 #</span>
           <span class="c-recommend__tag"># 照亮你的美 #</span>
         </div>
-        <div class="c-person__info" ref="person">
-          <img class="c-person__avata" :src="personal.avatarUrl" alt="">
-          <span>{{personal.nickname}}</span>
-        </div>
-        <div class="c-recommend__lists">
+        <div>
+          <div class="c-person__info">
+            <img class="c-person__avata" :src="personal.avatarUrl" alt="">
+            <span>{{personal.nickname}}</span>
+          </div>
           <div class="c-recommend__list__total">
             <div class="c-recommend__play">
               <i class="iconfont">&#xeb6d;</i>
             </div>
             {{recommends.length}}
           </div>
+        </div>
+        <div class="c-recommend__lists">
           <music-list :music-data="recommends"/>
       </div>
       </div>
@@ -78,14 +92,22 @@ export default {
     scrollAnimate(pos) {
       const { y } = pos
       let precent = y / this.clientHeight
+
       if (y > 0) { // 向下滑
         this.$refs.cover.style.transform = `scale(${1 + precent})`
         this.$refs.mask.style.top = this.clientHeight + y + 'px'
+        this.$refs.person.style.display = `none`
       } else if (y > -this.clientHeight + this.headerHeight) {
         precent = y / (this.clientHeight - this.headerHeight)
         this.$refs.cover.style.opacity = `${1 + precent}`
         this.$refs.header.style.background = `rgba(0, 0, 0, ${-precent})`
         this.$refs.mask.style.top = this.clientHeight + y + 'px'
+        this.$refs.person.style.display = `none`
+      } else {
+        this.$refs.mask.style.top = this.clientHeight - this.headerHeight + 'px'
+        this.$refs.cover.style.opacity = `0`
+        this.$refs.header.style.background = `rgba(0, 0, 0, 1)`
+        this.$refs.person.style.display = 'block'
       }
     },
     getRecommend() {
@@ -117,7 +139,7 @@ export default {
 
 <style scoped lang="less">
   .g-layout {
-    background: transparent;
+    background: #000;
   }
   .c-play__cover {
     position: absolute;
@@ -157,43 +179,8 @@ export default {
         font-size: 22px;
       }
     }
-    .c-person__info {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      color: #ccc;
-      margin-top: 50px;
-      font-size: 24px;
-    }
-    .c-person__avata {
-      margin-right: 30px;
-      width: 60px;
-      height: 60px;
-      border-radius: 60px;
-    }
     .c-recommend__lists {
       margin-top: 50px;
-      .c-recommend__list__total {
-        display: flex;
-        align-items: center;
-        color: #ccc;
-        font-weight: bold;
-        font-size: 22px;
-      }
-      .c-recommend__play {
-        margin-right: 30px;
-        width: 100px;
-        text-align: center;
-        line-height: 46px;
-        height: 40px;
-        border-radius: 50px;
-        background: yellow;
-        .iconfont {
-          font-size: 32px;
-          color: #000;
-          transform: rotate(-.25turn);
-        }
-      }
     }
   }
   .c-mask {
@@ -210,5 +197,53 @@ export default {
     height: 120px;
     z-index: 12;
     background: transparent;
+  }
+  .c-person__info {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: #ccc;
+    margin-top: 50px;
+    font-size: 24px;
+    left: 0;
+    .c-person__avata {
+      margin-right: 30px;
+      width: 60px;
+      height: 60px;
+      border-radius: 60px;
+    }
+  }
+  .c-person__info--slide {
+    margin-top: 0;
+    position: absolute;
+    top: 120px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 30px 20px;
+    background: #000;
+    z-index: 100;
+    display: none;
+  }
+  .c-recommend__list__total {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    color: #ccc;
+    font-weight: bold;
+    font-size: 22px;
+  }
+  .c-recommend__play {
+    margin-right: 30px;
+    width: 100px;
+    text-align: center;
+    line-height: 46px;
+    height: 40px;
+    border-radius: 50px;
+    background: yellow;
+    .iconfont {
+      font-size: 32px;
+      color: #000;
+      transform: rotate(-.25turn);
+    }
   }
 </style>

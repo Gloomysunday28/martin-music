@@ -9,7 +9,8 @@
     <div class="g-container">
       <transition :name="fade">
         <keep-alive :exclude="keepAlive">
-          <router-view ref="wrong" :class="['page-view', {'page-header--none': !showHeader, 'page-header--import': showImportHeader}]" @changeHeaderBack="YGBOARD = false"/>
+          <router-view ref="wrong" :class="['page-view', {'page-header--none': !showHeader, 'page-header--import': showImportHeader}]" @changeHeaderBack="YGBOARD = false">
+          </router-view>
         </keep-alive>
       </transition>
       <transition name="clip">

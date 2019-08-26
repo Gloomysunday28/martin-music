@@ -37,7 +37,20 @@ Vue.use(log)
 
 Vue.config.productionTip = false
 
+const starcts = Vue.config.optionMergeStrategies
+starcts.beforeCjd = starcts.created
+
 Vue.mixin({
+  beforeCreate() {
+    if (!this.cjd) {
+      Vue.util.defineReactive(this, 'cjd', 123)
+      if (this.$options.beforeCjd) {
+        for (let o of this.$options.beforeCjd) {
+          o.call(this, 3312)
+        }
+      }
+    }
+  },
   data() {
     return {
       isApp
@@ -74,4 +87,5 @@ new Vue({
   router,
   store,
   render: h => h(App)
+  // renderError: h => h(App)
 })

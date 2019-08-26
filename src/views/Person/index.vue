@@ -97,6 +97,13 @@ export default {
       return [...this.recentList].splice(0, 3)
     },
   },
+  beforeCjd() {
+    console.log(312)
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log(to)
+    next()
+  },
   mounted() {
     this.$common.listen('changePageStatus', () => {
       this.$router.push({

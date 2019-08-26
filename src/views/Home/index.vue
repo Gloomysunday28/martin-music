@@ -1,5 +1,6 @@
 <template>
   <div class="g-layout">
+    {{cjd}}
     <div class="c-home__contain" ref="contain">
       <router-link :to="{name: 'MusicSearch'}" class="c-home__search">
         <i class="iconfont">&#xe621;</i>
@@ -66,7 +67,7 @@ export default {
     swiper,
     swiperSlide,
   },
-  data() {
+  data(vm) {
     return {
       tag: false,
       banner: [],
@@ -80,10 +81,17 @@ export default {
       recommends: []
     }
   },
+  bbb() {
+
+  },
   computed: mapState({
     personal: state => state.baseInfo.personal
   }),
+  beforeCjd() {
+    console.log(this)
+  },
   mounted() {
+    this.cjd = 321
     this.getAllData()
   },
   activated() {
@@ -112,6 +120,10 @@ export default {
     },
     getBanner() {
       return this.$http.get(this.$api.getBanner)
+    }
+  },
+  watch: {
+    cjd(n) {
     }
   }
 }

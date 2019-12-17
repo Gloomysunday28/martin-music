@@ -92,8 +92,6 @@ export default {
     this.getRecommend()
   },
   deactivated() {
-    const scrollTop = this.$refs.contain.scrollTop
-    window.sessionStorage.setItem('scrollTop', scrollTop)
     this.bs.off('scroll')
   },
   methods: {

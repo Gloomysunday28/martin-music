@@ -184,7 +184,6 @@ export default {
       } else {
         if (this.isIndex || window.sessionStorage.parent) { // iframe嵌套，直接返回Mobile首页
           window.sessionStorage.removeItem('parent')
-          window.YunGuiBridge.sendMessage2Native('goBack', 'back')
         } else {
           if (this.backPage) this.$router.push({name: this.backPage})
           else {

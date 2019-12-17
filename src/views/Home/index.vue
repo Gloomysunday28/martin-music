@@ -115,10 +115,6 @@ export default {
       return this.$http.get(this.$api.getBanner)
     }
   },
-  watch: {
-    cjd(n) {
-    }
-  }
 }
 </script>
 

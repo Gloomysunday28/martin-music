@@ -84,6 +84,7 @@ export default {
     oImage.src = this.$route.query.coverUrl
     oImage.onload = () => {
       oImage.decode().then(_ => {
+        this.$refs.cover.innerHTML = ''
         this.$refs.cover.appendChild(oImage)
       })
     }

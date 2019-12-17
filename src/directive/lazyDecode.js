@@ -17,8 +17,9 @@ export default {
             oImage.src = el.dataset.src
             oImage.onload = () => {
               oImage.decode().then(() => {
-                el.appendChild(oImage)
+                el.innerHTML = ''
                 el.style = null
+                el.appendChild(oImage)
               })
             }
           }

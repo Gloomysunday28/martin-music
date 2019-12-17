@@ -5,11 +5,11 @@
         <i class="iconfont back-icon">&#xe61b;</i>
       </span>
     </transition>
-    <base-header :class="{'page-header--import': showImportHeader, 'page-header__none': !showHeader}" :header-config="headerConfig" :bg-color="bgColor"/>
-    <div class="g-container">
+    <base-header  :header-config="headerConfig" :bg-color="bgColor"/>
+    <div :class="['g-container']">
       <transition :name="fade">
         <keep-alive :exclude="keepAlive">
-          <router-view ref="wrong" :class="['page-view', {'page-header--none': !showHeader, 'page-header--import': showImportHeader}]" @changeHeaderBack="YGBOARD = false">
+          <router-view ref="wrong" :class="['page-view', {'g-container__full': !showHeader, 'page-header--import': showImportHeader}]" @changeHeaderBack="YGBOARD = false">
           </router-view>
         </keep-alive>
       </transition>
@@ -363,5 +363,12 @@ export default {
   .page-header__none {
     height: 0 !important;
     padding: 0 !important;
+  }
+  .g-container__full {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
   }
 </style>

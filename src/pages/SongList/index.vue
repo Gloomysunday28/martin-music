@@ -8,7 +8,8 @@
         name: 'MusicPlayList',
         query: {
           title: song.name,
-          id: song.id
+          id: song.id,
+          coverUrl: song.coverImgUrl
         }
       }"
     >

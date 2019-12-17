@@ -8,7 +8,7 @@
     <div class="c-songlist__option">
       <span>{{songLists.length}}</span>
       <div class="c-song__option">
-        <i class="iconfont" @click="$router.push({name: 'MusicAddSongList'})">&#xe61e;</i>
+        <i class="iconfont" @click="$router.push({name: 'MusicAddSongList', query: {}})">&#xe61e;</i>
         <i class="iconfont">&#xe628;</i>
       </div>
     </div>

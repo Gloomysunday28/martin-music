@@ -88,7 +88,6 @@ export default {
         this.$refs.cover.appendChild(oImage)
       })
     }
-    // this.cover = this.$route.query.coverUrl
     this.getRecommend()
   },
   deactivated() {
@@ -133,9 +132,9 @@ export default {
   },
   watch: {
     $route(n, v) {
-      if (window.sessionStorage.scrollTop) {
+      if (window.sessionStorage.scrollTop && n.meta.oDeep > v.meta.oDeep) {
         this.$nextTick().then(_ => {
-          this.$refs.contain.scrollTop = n.meta.oDeep > v.meta.oDeep ? 0 : window.sessionStorage.scrollTop
+          this.bs.scrollTo(0, 0)
         })
       }
     }

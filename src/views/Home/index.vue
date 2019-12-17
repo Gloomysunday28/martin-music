@@ -7,7 +7,7 @@
       <div class="swiper-container">
         <swiper class="swiper-wrapper" :options="swiperOption">
           <swiper-slide class="swiper-slide" v-for="ban in banner" :key="ban.imageUrl">
-            <img class="swpier-img" :src="ban.imageUrl"/>
+            <div class="swpier-img" v-lazy-decode="ban.imageUrl"></div>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper >
@@ -15,8 +15,7 @@
       <!-- 推荐菜单 -->
       <div class="c-music__menu" v-if="banner.length">
         <router-link class="c-music__item" :to="{name: 'MusicPlayList', query: {coverUrl: banner[0].imageUrl}}">
-          <div class="c-menu__img__contain">
-            <img class="c-menu__img" v-lazy="banner[0].imageUrl" alt="">
+          <div class="c-menu__img__contain" v-lazy-decode="banner[0].imageUrl">
           </div>
           <div class="c-menu__img__contain">
             <p class="c-menu__text">20+每日推荐</p>
@@ -27,11 +26,10 @@
           </div>
         </router-link>
         <div class="c-music__item">
-          <router-link class="c-menu__img__contain" :to="{name: 'MusicSongType'}">
-            <img class="c-menu__img" v-lazy="banner[1].imageUrl" alt="">
+          <router-link class="c-menu__img__contain" :to="{name: 'MusicSongType'}" v-lazy-decode="banner[1].imageUrl">
+            <!-- <img class="c-menu__img" v-lazy="banner[1].imageUrl" alt=""> -->
           </router-link>
-          <div class="c-menu__img__contain">
-            <img class="c-menu__img" v-lazy="banner[2].imageUrl" alt="">
+          <div class="c-menu__img__contain" v-lazy-decode="banner[2].imageUrl">
           </div>
         </div>
       </div>
@@ -40,8 +38,7 @@
         <b class="c-recommend__label">推荐歌单</b>
         <div class="c-recommend">
           <router-link class="c-music__item" v-for="rem in recommends" :key="rem.id" :to="{name: 'MusicPlayList', query: {coverUrl: rem.picUrl, title: rem.name, id: rem.id}}">
-            <div class="c-menu__img__contain c-menu__recommend__recommend">
-              <img class="c-menu__img" v-lazy="rem.picUrl" alt="">
+            <div class="c-menu__img__contain c-menu__recommend__recommend" v-lazy-decode="rem.picUrl">
             </div>
             <div class="c-menu__img__contain">
               <p class="c-menu__name">{{rem.name}}</p>
@@ -149,6 +146,7 @@ export default {
   }
   .swpier-img {
     width: 100%;
+    height: 300px;
   }
   .c-home__contain {
     margin-top: 10px;

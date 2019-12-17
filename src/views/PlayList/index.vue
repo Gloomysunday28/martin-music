@@ -161,6 +161,7 @@ export default {
     overflow: hidden;
     background-size: 100% 100%;
     position: relative;
+    transform-origin: center top;
     /deep/ .c-image__cover {
       position: absolute;
       left: 0;

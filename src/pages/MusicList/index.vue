@@ -2,7 +2,7 @@
   <div class="c-music__list">
     <div class="c-music__item" v-for="music in musicData" :key="music.id" @click="openMusic(music.id)">
       <div class="c-music__msg">
-        <img class="c-music__img" v-lazy="getCover(music)" alt>
+        <div class="c-music__img" :data-src="getCover(music)" v-lazy-decode></div>
         <div class="c-music__info">
           <p>{{getName(music)}}</p>
           <p class="c-music__creator">{{getCreator(music)}}</p>

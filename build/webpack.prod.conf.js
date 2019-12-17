@@ -10,6 +10,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+var Dashboard = require('webpack-dashboard');
+var DashboardPlugin = require('webpack-dashboard/plugin');
+var dashboard = new Dashboard();
+var WebpackBuildNotifierPlugin = require('webpack-build-notifier');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+var HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -30,6 +36,14 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    new HardSourceWebpackPlugin({
+      cacheDirectory: 'node_modules/.cache/hard-source/[confighash]',
+      configHash: function(webpackConfig) {
+          // node-object-hash on npm can be used to build this.
+          return require('node-object-hash')({sort: false}).hash(webpackConfig);
+      },
+    }),
+    new DashboardPlugin(dashboard.setData),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
@@ -111,7 +125,12 @@ const webpackConfig = merge(baseWebpackConfig, {
       children: true,
       minChunks: 3
     }),
-
+    new WebpackBuildNotifierPlugin({
+      title: "My Project Webpack Build",
+      logo: path.resolve(__dirname, "./src/assets/img/logo.png"),
+      suppressSuccess: true
+    }),
+    new ProgressBarPlugin(),
     // copy custom static assets
     new CopyWebpackPlugin([
       {

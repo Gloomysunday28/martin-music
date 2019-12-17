@@ -15,7 +15,7 @@
         {{recommends.length}}
       </div>
     </div>
-    <div class="c-recommend__cover" ref="cover" :style="{backgroundImage: `url(${cover})`, backgroundRepeat: ' no-repeat'}">
+    <div class="c-recommend__cover" ref="cover">
     </div>
     <div class="c-mask" ref="mask"></div>
     <div class="c-recommend__songs" ref="songs">
@@ -71,7 +71,6 @@ export default {
     this.$refs.mask.style.top = this.clientHeight + 'px'
     this.$refs.songs.style.top = this.clientHeight + 'px'
     this.headerHeight = this.$refs.header.offsetHeight
-    console.log(this.headerHeight)
     this.bs = new BetterScroll('.c-recommend__songs', {
       probeType: 3
     })
@@ -80,7 +79,15 @@ export default {
     this.bs.on('scroll', this.scrollAnimate)
     this.isRecoomend = !this.$route.query.title
     this.$common.trigger('getStatus', this.$route.query.title || '每日推荐', 'title')
-    this.cover = this.$route.query.coverUrl
+    const oImage = new Image()
+    oImage.className = 'c-image__cover'
+    oImage.src = this.$route.query.coverUrl
+    oImage.onload = () => {
+      oImage.decode().then(_ => {
+        this.$refs.cover.appendChild(oImage)
+      })
+    }
+    // this.cover = this.$route.query.coverUrl
     this.getRecommend()
   },
   deactivated() {
@@ -155,6 +162,14 @@ export default {
     padding-top: 100%;
     overflow: hidden;
     background-size: 100% 100%;
+    position: relative;
+    /deep/ .c-image__cover {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
   .c-recommend__songs {
     box-sizing: border-box;

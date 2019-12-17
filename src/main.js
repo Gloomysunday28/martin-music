@@ -15,6 +15,7 @@ import MusicTextArea from '@/components/App/Form/TextArea'
 import isApp from '@/utils/isApp'
 import VueLazyload from 'vue-lazyload'
 import log from '@/utils/log'
+import lazyDecode from '@/directive/lazyDecode'
 import '@/assets/css/common.less'
 import 'swiper/dist/css/swiper.css'
 import '@/assets/font/iconfont.css'
@@ -73,6 +74,9 @@ Vue.mixin({
 // requireComponent.keys().forEach(fileName => {
 //   console.log(requireComponent(fileName))
 // })
+Vue.use(lazyDecode, {
+  loading: require('@/assets/img/loading-ps.jpg')
+})
 
 Vue.use(VueLazyload, { // 图片懒加载
   preLoad: 1.3,

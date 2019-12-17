@@ -27,7 +27,6 @@
         </router-link>
         <div class="c-music__item">
           <router-link class="c-menu__img__contain" :to="{name: 'MusicSongType'}" v-lazy-decode="banner[1].imageUrl">
-            <!-- <img class="c-menu__img" v-lazy="banner[1].imageUrl" alt=""> -->
           </router-link>
           <div class="c-menu__img__contain" v-lazy-decode="banner[2].imageUrl">
           </div>

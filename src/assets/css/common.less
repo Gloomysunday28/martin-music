@@ -318,3 +318,34 @@ input:focus {
     transform: translate3d(0, 0, 0);
   }
 }
+
+
+.fade-slide-top-enter-active {
+  animation: fade-slide-top-enter .5s ease-out;
+}
+
+.fade-slide-top-leave-active {
+  animation: fade-slide-top-leave .5s ease-out;
+}
+
+@keyframes fade-slide-top-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fade-slide-top-leave {
+  from {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+}

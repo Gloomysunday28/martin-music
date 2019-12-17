@@ -1,6 +1,6 @@
 <template>
   <div class="c-music__list">
-    <div class="c-music__item" v-for="music in musicData" :key="music.id" @click="openMusic(music.id)">
+    <div class="c-music__item" v-for="music in musicData" :key="music.id" @click="openMusic(music)">
       <div class="c-music__msg">
         <div class="c-music__img" v-lazy-decode="getCover(music)"></div>
         <div class="c-music__info">
@@ -26,8 +26,8 @@ export default {
     }
   },
   methods: {
-    openMusic(id) {
-      this.$common.trigger('listenMusic', id, true)
+    openMusic(music) {
+      this.$common.trigger('listenMusic', music.id, true, this.getCover(music))
     },
     getCover(music) {
       const cover = music.album ? music.album.picUrl : music.al.picUrl

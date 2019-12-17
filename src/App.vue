@@ -15,7 +15,7 @@
       </transition>
       <transition name="clip">
         <keep-alive>
-          <play-song ref="music" :id="songId" @isPlay="v => isPlay = v" v-if="listenGlobal" v-show="listenGlobalDisplay"></play-song>
+          <play-song ref="music" :id="songId" :bgUrl="bgUrl"  @isPlay="v => isPlay = v" v-if="listenGlobal" v-show="listenGlobalDisplay"></play-song>
         </keep-alive>
       </transition>
       <div class="m-music__cd" @click="listenMusic('', true)">
@@ -25,8 +25,8 @@
         </div>
         <div class="m-cd__info">
           {{currentTime}}
-          <i class="iconfont m-cd__play" @click.stop="playPause" v-if="!isPlay">&#xeb6d;</i>
-          <div class="m-cd__pause" @click.stop="playPause" v-else>
+          <i class="iconfont m-cd__play" @click.stop="playPause(true)" v-if="!isPlay">&#xeb6d;</i>
+          <div class="m-cd__pause" @click.stop="playPause(false)" v-else>
             <div class="m-pause"></div>
             <div class="m-pause"></div>
           </div>
@@ -73,6 +73,7 @@ export default {
       isIndex: true,
       hasNoBack: false,
       backPage: '',
+      bgUrl: '',
       defaultMap: new Map([
         [/^(showImportHeader|isIndex)$/, false],
         [/^(keepAlive|backPage)$/, ''],
@@ -87,12 +88,16 @@ export default {
     this.$common.listen('listenMusicProgress', this.listenMusicProgress)
   },
   methods: {
-    playPause() { // 播放或暂停
-      this.$refs.music.playSong()
+    playPause(isPlay) { // 播放或暂停
+      this.isPlay = isPlay
+      if (this.isPlay) {
+        this.$refs.music.playSong()
+      }
     },
-    listenMusic(id, bool = false) { // 是否听音乐
+    listenMusic(id, bool = false, bgUrl) { // 是否听音乐
       this.listenGlobal = true
       this.listenGlobalDisplay = bool
+      bgUrl && (this.bgUrl = bgUrl)
       if (id) {
         this.songId = id
       }
@@ -198,10 +203,11 @@ export default {
       this.judgeRoute(n, v)
     },
     isPlay(n) {
-      if (n) {
+      if (n && !this.timer) {
         this.changeTime()
       } else {
         clearInterval(this.timer)
+        this.timer = null
       }
     }
   }
@@ -290,9 +296,11 @@ export default {
     border-radius: 120px;
     background: #000;
     z-index: 10;
+    animation: infinateRotate 2s linear infinite;
+    animation-play-state: paused;
   }
   .m-cd__rotate {
-    animation: infinateRotate 2s linear infinite;
+    animation-play-state: running;
   }
 
   .m-rotate__mark {

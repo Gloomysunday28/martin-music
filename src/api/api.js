@@ -33,6 +33,7 @@ const api = {
   addSongList: '/playlist/create', // 新建歌单
   songUrl: '/song/url', // 歌曲地址
   playListDetail: '/playlist/detail', // 歌单内容
+  songLyrics: '/lyric', // 获取歌词
 
   // 关注
   followUser: '/follow', // 关注或者取关

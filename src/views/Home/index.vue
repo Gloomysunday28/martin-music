@@ -7,7 +7,7 @@
       <div class="swiper-container">
         <swiper class="swiper-wrapper" :options="swiperOption">
           <swiper-slide class="swiper-slide" v-for="ban in banner" :key="ban.imageUrl">
-            <img class="swpier-img" :src="ban.imageUrl"/>
+            <img class="swpier-img" v-lazy-decode="ban.imageUrl"/>
           </swiper-slide>
           <div class="swiper-pagination" slot="pagination"></div>
         </swiper >
@@ -148,8 +148,14 @@ export default {
     height: 50px;
     border-radius: 50px;
   }
+  .swiper-slide {
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+  }
   .swpier-img {
     width: 100%;
+    height: 100%;
   }
   .c-home__contain {
     margin-top: 10px;

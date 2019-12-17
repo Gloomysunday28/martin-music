@@ -5,22 +5,23 @@ export default {
     } = options
 
     Vue.directive('lazy-decode', {
-      bind(el) {
+      bind(el, express) {
+        const { value } = express
+        if (value) {
+          el.dataset.src = value
+        }
+
         el.style.background = `url(${loading}) no-repeat center/contain`
-        const oImage = new Image()
         const observer = new IntersectionObserver(function(entries) {
           const {0: {
             isIntersecting
           }, 1: initInterOpt } = entries
 
-          if ((initInterOpt && initInterOpt.isIntersecting) || isIntersecting) {
-            oImage.src = el.dataset.src
-            oImage.onload = () => {
-              oImage.decode().then(() => {
-                el.innerHTML = ''
-                el.style = null
-                el.appendChild(oImage)
-              })
+          if (((initInterOpt && initInterOpt.isIntersecting) || isIntersecting) && !el.src) {
+            el.src = el.dataset.src
+            el.onload = () => {
+              el.decode()
+              observer.unobserve(el)
             }
           }
         })

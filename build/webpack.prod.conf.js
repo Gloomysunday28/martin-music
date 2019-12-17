@@ -43,7 +43,7 @@ const webpackConfig = merge(baseWebpackConfig, {
           return require('node-object-hash')({sort: false}).hash(webpackConfig);
       },
     }),
-    new DashboardPlugin(dashboard.setData),
+    // new DashboardPlugin(dashboard.setData),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env

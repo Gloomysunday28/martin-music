@@ -260,6 +260,11 @@ export default {
     animation: slideOpacity .8s ease-in-out forwards;
   }
 
+  #app >>> .m-decode__img {
+    width: 100%;
+    height: 100%;
+  }
+
   @keyframes slideOpacity {
     from {
       transform: translate3d(0, 0, 0);

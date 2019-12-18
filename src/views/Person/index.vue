@@ -52,6 +52,8 @@
           <div class="c-song__img" v-for="play in recentListCover" :key="play.song.id">
             <img class="c-song__cover" :src="play.song.al.picUrl">
           </div>
+          <div class="c-song__img" v-for="play in getRestRecentCover" :key="play">
+          </div>
         </div>
         <div class="c-song__title">
           <span class="c-song__label">最近播放</span>
@@ -71,8 +73,21 @@
       </div>
     </div>
     <router-link class="c-music__message" :to="{name: 'MusicMessage'}">
-      动态
-      <i class="iconfont">&#xe603;</i>
+      <div class="m-flex">
+        <i class="iconfont icon-friends c-icon__prefix"></i>
+        动态
+      </div>
+      <i class="iconfont icon-arrow">&#xe603;</i>
+    </router-link>
+    <router-link class="c-music__message" :to="{name: 'MusicNotice'}">
+      <div class="m-flex">
+        <i class="iconfont icon-xiaoxi c-icon__prefix"></i>
+        消息
+      </div>
+      <div class="m-flex">
+        <div class="c-new__batch"><strong>NEW</strong></div>
+        <i class="iconfont icon-arrow">&#xe603;</i>
+      </div>
     </router-link>
   </div>
 </template>
@@ -96,13 +111,10 @@ export default {
     recentListCover() {
       return [...this.recentList].splice(0, 3)
     },
-  },
-  beforeCjd() {
-    console.log(312)
-  },
-  beforeRouteEnter(to, from, next) {
-    console.log(to)
-    next()
+    getRestRecentCover() {
+      const length = this.recentList.length
+      return length > 3 ? 0 : 3 - length
+    },
   },
   mounted() {
     this.$common.listen('changePageStatus', () => {
@@ -262,14 +274,31 @@ export default {
     }
     .c-music__message {
       margin-top: 40px;
+      margin-bottom: 20px;
+      padding: 0 30px;
       font-size: 32px;
       color: #ccc;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      .iconfont {
+      .c-icon__prefix {
+        margin-top: 2px;
+        margin-right: 40px;
+      }
+      .icon-arrow {
         color: #ccc;
-        font-size: 36px;
         transform: rotate(-.25turn);
+      }
+      .iconfont {
+        font-size: 42px;
+      }
+      .c-new__batch {
+        margin-right: 20px;
+        padding: 2px 20px;
+        border-radius: 30px;
+        font-size: 22px;
+        background: yellow;
+        color: #000;
       }
     }
   }

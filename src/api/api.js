@@ -37,6 +37,10 @@ const api = {
 
   // 关注
   followUser: '/follow', // 关注或者取关
+
+  // 消息
+  noticeLists: '/msg/private', // 消息列表
+  noticeHistory: '/msg/private/history', // 消息内容
 }
 
 export default {

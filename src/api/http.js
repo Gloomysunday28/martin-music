@@ -17,13 +17,10 @@ const noCache = [
 const box = new Vue()
 
 const Axios = axios.create({
-  // baseURL: 'http://192.168.8.71:3000',
-  baseURL: 'http://111.231.55.237:3000',
+  baseURL: 'http://192.168.8.71:3000',
+  // baseURL: 'http://111.231.55.237:3000',
   timeout: 10000,
-  // withCredentials: true,
-  // transformRequest(data) {
-  //   return qs.stringify(data)
-  // }
+  withCredentials: true,
   paramsSerializer: function(params) {
     return qs.stringify(params, {arrayFormat: 'repeat'})
   }
@@ -32,7 +29,7 @@ const Axios = axios.create({
 Axios.interceptors.request.use((config) => {
   box.$loading(true)
   if (noCache.includes(config.url)) {
-    config.url += (config.url.includes('?') ? '&' : '?') + `timestamp=${+new Date()}` // 网易云音乐api为了避免高频ip请求错误,设置了2分钟的时间不去请求网易云服务器, 如果设置不缓存的话那么设置teimestamp
+    config.url += (config.url.includes('?') ? '&' : '?') + `timestamp=${+new Date() + 1000 * 60 * 2}` // 网易云音乐api为了避免高频ip请求错误,设置了2分钟的时间不去请求网易云服务器, 如果设置不缓存的话那么设置teimestamp
   }
   return config
 }, (error) => {

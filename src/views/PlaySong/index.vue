@@ -157,16 +157,23 @@ export default {
         })
       }).then(res => {
         const {
-          lrc: {
-            lyric
+          lrc = {
+            lyric: ''
           }
         } = res.data
-        this.assembleLyric = lyric.split('\n').map(ly => ly.replace('[', '').split(']').filter(Boolean))
-        this.lyric = this.assembleLyric[this.lyricOrder++][1]
+
+        if (lrc.lyric) {
+          const { lyric } = lrc
+          this.assembleLyric = lyric.split('\n').map(ly => ly.replace('[', '').split(']').filter(Boolean))
+          this.lyric = this.assembleLyric[this.lyricOrder++][1]
+        } else this.lyric = ''
+
         this.$nextTick().then(() => {
           this.$refs.musicPlay.play()
-          this.$refs.musicPlay.removeEventListener('timeupdate', this.updateLyric)
-          this.$refs.musicPlay.addEventListener('timeupdate', this.updateLyric)
+          if (lrc.lyric) {
+            this.$refs.musicPlay.removeEventListener('timeupdate', this.updateLyric)
+            this.$refs.musicPlay.addEventListener('timeupdate', this.updateLyric)
+          }
         })
       })
     },
@@ -184,7 +191,7 @@ export default {
     id(n, v) {
       if (v && n !== v) this.getSongUrl()
     },
-    lyric() {
+    lyric(n) {
       this.lyricCurrent = this.assembleLyric[this.lyricOrder++]
       const [minute, second] = this.lyricCurrent[0].split(':')
       this.lyricTime = +minute * 60 + +second

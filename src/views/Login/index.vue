@@ -152,6 +152,7 @@ export default {
       border-radius: 0 30px 30px 0;
       font-size: 30px;
       color: #444;
+      background: #fff;
     }
     .c-login__method {
       margin-top: 10px;

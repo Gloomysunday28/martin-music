@@ -25,7 +25,7 @@
       </div>
     </router-link>
     <div class="c-person__songs">
-      <router-link class="c-person__list" :to="{name: 'MusicSongList', query: {type: 1}}">
+      <router-link tag="div" class="c-person__list" :to="{name: 'MusicSongList', query: {type: 1}}">
         <div class="c-song__list">
           <div class="c-song__img"></div>
           <div class="c-song__img"></div>
@@ -36,7 +36,7 @@
           <span class="c-song__number">{{loveList.length}}</span>
         </div>
       </router-link>
-      <router-link class="c-person__list" :to="{name: 'MusicSongList', query: {type: 0}}">
+      <router-link tag="div" class="c-person__list" :to="{name: 'MusicSongList', query: {type: 0}}">
         <div class="c-song__list">
           <div class="c-song__img" v-for="play in playListCover" :key="play.id">
             <img class="c-song__cover" :src="play.coverImgUrl">
@@ -185,8 +185,8 @@ export default {
 
 <style scoped lang="less">
   .g-layout {
-    box-sizing: border-box;
-    padding: 0 20px;
+    padding: 0 20px 100px;
+    overflow-y: auto;
     .c-person__card {
       padding: 20px 30px;
       box-sizing: border-box;
@@ -234,6 +234,8 @@ export default {
       margin-top: 50px;
       display: flex;
       flex-wrap: wrap;
+      overflow: auto;
+      flex: none;
     }
     .c-person__list {
       margin-bottom: 50px;
@@ -273,6 +275,7 @@ export default {
       }
     }
     .c-music__message {
+      flex: none;
       margin-top: 40px;
       margin-bottom: 20px;
       padding: 0 30px;

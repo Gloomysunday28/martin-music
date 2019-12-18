@@ -170,7 +170,7 @@ const router = new Router({
       meta: {
         keepAlive: false,
         showHeader: true,
-        oDeep: 5,
+        oDeep: 10,
         title: ''
       },
       component: () => import('@/views/Others')
@@ -182,7 +182,8 @@ const router = new Router({
         keepAlive: false,
         showHeader: true,
         oDeep: 5,
-        title: '我的消息'
+        title: '我的消息',
+        showCD: false
       },
       component: () => import('@/views/Notice')
     },
@@ -193,7 +194,8 @@ const router = new Router({
         keepAlive: false,
         showHeader: true,
         oDeep: 6,
-        title: '我的消息'
+        title: '我的消息',
+        showCD: false
       },
       component: () => import('@/views/Notice/Chat')
     },

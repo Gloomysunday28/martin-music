@@ -31,11 +31,11 @@ export default {
     },
     getCover(music) {
       const cover = music.album ? music.album.picUrl : music.al.picUrl
-
+    
       return cover
     },
     getName(music) {
-      const name = music.album ? music.album.name : music.al.name
+      const name = music.name
 
       return name
     },

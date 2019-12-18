@@ -21,13 +21,17 @@ export default {
           if (((initInterOpt && initInterOpt.isIntersecting) || isIntersecting) && !oImage.src) {
             oImage.src = el.dataset.src
             oImage.className = 'm-decode__img'
-            oImage.onload = () => {
-              oImage.decode().then(() => {
+            oImage.onload = async (res) => {
+              try {
+                await oImage.decode()
+                
                 el.style = null
                 el.innerHTML = ''
                 el.appendChild(oImage)
                 observer.unobserve(el)
-              })
+              } catch(err) {
+                console.log(err);
+              }
             }
           }
         }, {

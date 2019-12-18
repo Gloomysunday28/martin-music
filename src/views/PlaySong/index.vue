@@ -203,6 +203,7 @@ export default {
 
 <style scoped lang="less">
   .g-layout {
+    overflow: hidden;
     position: fixed;
     left: 0;
     top: 0;

@@ -53,7 +53,7 @@ export default {
   watch: {
     $route: {
       handler(n, v) {
-        if (!v || n.meta.oDeep > v.meta.oDeep) {
+        if (!v || v.meta.oDeep < 5) {
           this.getNotice()
         }
       },

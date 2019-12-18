@@ -4,7 +4,6 @@ import axios from 'axios'
 import qs from 'qs'
 
 const noCache = [
-  '/login/cellphone',
   '/user/detail',
   '/user/follows',
   '/user/followeds',
@@ -17,7 +16,7 @@ const noCache = [
 const box = new Vue()
 
 const Axios = axios.create({
-  baseURL: 'http://192.168.8.71:3000',
+  baseURL: 'http://192.168.0.103:3000',
   // baseURL: 'http://111.231.55.237:3000',
   timeout: 10000,
   withCredentials: true,
@@ -55,6 +54,9 @@ Axios.interceptors.response.use((response) => {
   if (error.code === 'ECONNABORTED') return void box.$toast('网络请求超时', {styles: {backgroud: '#fff'}})
   if (error.response) {
     switch (error.response.status) {
+      case 301:
+        Router.push({name: 'MusicLogin'})
+        break
       case 400:
       case 401:
       case 408:
@@ -65,9 +67,9 @@ Axios.interceptors.response.use((response) => {
       case 502:
         box.$toast('网络请求超时', {styles: {backgroud: '#fff'}})
         return error.response
-      case 301:
-        Router.push({name: 'MusicLogin'})
-        break
+      case 509:
+        box.$toast('请求过多次数, 请稍后再试~', {styles: {backgroud: '#fff'}})
+        return error.response
       default:
         break
     }

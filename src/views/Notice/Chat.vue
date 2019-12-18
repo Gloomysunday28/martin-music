@@ -1,23 +1,41 @@
 <template>
   <div class="g-layout">
-    <div class="c-notice__hint">
+    <div class="c-notice__hint" v-if="hint">
       <div class="c-notice__marquee">{{hint}}</div>
     </div>
     <div class="c-notice__contain">
+      <div>
+        <div :class="['c-notice__chat', 'm-flex', {'c-notice__me': getFromUser(msgs)}]" v-for="msgs in msgsHistory" :key="msgs.id">
+          <div class="c-notice__time">{{$utils.filterTime(msgs.time)}}</div>
+          <div class="c-notice__chat__contain m-flex">
+            <router-link tag="div" :to="{name: 'MusicOthers', params: {uid: msgs.fromUser.userId}}">
+              <img class="c-notice__avatar" :src="msgs.fromUser.avatarUrl" alt="">
+            </router-link>
+            <div class="c-notice__content">
+              {{msgs.msg.msg}}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="c-notice__send__container m-flex">
-      <input class="c-notice__input" type="text" placeholder="说点什么吧~~">
-      <button class="c-notice__send">发送</button>
+      <input class="c-notice__input" type="text" v-model="msg" placeholder="说点什么吧~~" @keyup.enter="sendMsg">
+      <button class="c-notice__send" @click="sendMsg">发送</button>
     </div>
   </div>
 </template>
 
 <script>
+import BetterScroll from 'better-scroll'
+
 export default {
   name: 'MusicChat',
   data() {
     return {
-      hint: ''
+      bs: null,
+      hint: '',
+      msg: '',
+      msgsHistory: []
     }
   },
   mounted() {
@@ -31,8 +49,52 @@ export default {
         hint
       } = data
       this.hint = hint
+      this.msgsHistory = msgs.reverse().map(history => {
+        return {
+          ...history,
+          msg: JSON.parse(history.msg)
+        }
+      })
       this.$common.trigger('getStatus', msgs[0].fromUser.nickname, 'title')
+
+      this.$nextTick().then(() => {
+        this.bs = new BetterScroll('.c-notice__contain')
+        this.scrollBottom()
+      })
     })
+  },
+  methods: {
+    scrollBottom() {
+      this.bs.refresh()
+      this.bs.scrollTo(0, this.bs.maxScrollY)
+    },
+    getFromUser(msgs) {
+      const { fromUser } = msgs
+      return fromUser.userId === this.personal.userId
+    },
+    sendMsg() {
+      if (!this.msg) return void this.$toast('请输入您想输入的内容~~！')
+      this.$http.get(this.$api.sendNotice, {
+        params: {
+          user_ids: this.$route.params.id,
+          msg: this.msg
+        }
+      }).then(() => {
+        this.msgsHistory.push({
+          time: +new Date(),
+          fromUser: {
+            userId: this.personal.userId,
+            avatarUrl: this.personal.avatarUrl
+          },
+          msg: {
+            msg: this.msg
+          }
+        })
+
+        this.msg = ''
+        this.scrollBottom()
+      })
+    }
   }
 }
 </script>
@@ -41,8 +103,49 @@ export default {
 .g-layout {
   flex-direction: column;
   .c-notice__contain {
+    margin: 20px;
     background: #0d0d0d;
     flex: 1;
+    overflow-y: auto;
+    .c-notice__chat {
+      margin-bottom: 70px;
+      flex-direction: column;
+      &.c-notice__me {
+        align-items: flex-end;
+        .c-notice__chat__contain {
+          width: 100%;
+          flex-direction: row-reverse;
+        }
+        .c-notice__content {
+          margin-right: 20px;
+        }
+      }
+      .c-notice__time {
+        margin-bottom: 20px;
+        color: #666;
+        width: 100%;
+        text-align: center;
+      }
+      .c-notice__chat__contain {
+        width: 100%;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+      .c-notice__avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 100%;
+      }
+      .c-notice__content {
+        max-width: 60%;
+        padding: 20px 25px;
+        margin-left: 20px;
+        border-radius: 20px;
+        background: #666;
+        color: #f5f5f5b3;
+        font-size: 30px;
+      }
+    }
   }
   .c-notice__hint {
     flex: none;
@@ -65,6 +168,7 @@ export default {
       flex: 1;
       font-size: 36px;
       padding-left: 30px;
+      color: #fff;
     }
     .c-notice__send {
       color: #fff;

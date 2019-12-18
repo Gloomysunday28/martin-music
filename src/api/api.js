@@ -41,6 +41,7 @@ const api = {
   // 消息
   noticeLists: '/msg/private', // 消息列表
   noticeHistory: '/msg/private/history', // 消息内容
+  sendNotice: '/send/text', // 发送消息
 }
 
 export default {

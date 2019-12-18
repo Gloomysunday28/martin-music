@@ -18,7 +18,7 @@
           <play-song ref="music" :id="songId" :bgUrl="bgUrl"  @isPlay="v => isPlay = v" v-if="listenGlobal" v-show="listenGlobalDisplay"></play-song>
         </keep-alive>
       </transition>
-      <div class="m-music__cd" @click="listenMusic('', true)">
+      <div class="m-music__cd" @click="listenMusic('', true)" v-if="showCD">
         <div :class="['m-cd', {'m-cd__rotate': isPlay}]">
           <div class="m-cd__center"></div>
           <div class="m-rotate__mark"></div>
@@ -48,6 +48,7 @@ export default {
   },
   data() {
     return {
+      showCD: true,
       timer: null,
       isPlay: false, // 是否在播放
       duration: 0, // 该音乐的总长度
@@ -151,6 +152,7 @@ export default {
           }
         }
       }
+      this.showCD = n.meta.showCD === void 0 ? true : n.meta.showCD
       this.showHeader = n.meta.showHeader
       if (this.showHeader) {
         this.headerConfig.changeHeader = !this.headerConfig.changeHeader // 头部切换动画

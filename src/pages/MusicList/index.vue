@@ -31,7 +31,7 @@ export default {
     },
     getCover(music) {
       const cover = music.album ? music.album.picUrl : music.al.picUrl
-    
+
       return cover
     },
     getName(music) {

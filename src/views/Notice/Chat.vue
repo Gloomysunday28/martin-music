@@ -18,10 +18,10 @@
         </div>
       </div>
     </div>
-    <div class="c-notice__send__container m-flex">
-      <input class="c-notice__input" type="text" v-model="msg" placeholder="说点什么吧~~" @keyup.enter="sendMsg">
-      <button class="c-notice__send" @click="sendMsg">发送</button>
-    </div>
+    <form action="" class="c-notice__send__container m-flex" @submit.prevent>
+      <input ref="sendInput" class="c-notice__input" type="search" v-model="msg" placeholder="说点什么吧~~" @keyup.enter="sendMsg">
+      <i class="c-notice__send iconfont icon-jiahao"></i>
+    </form>
   </div>
 </template>
 
@@ -66,14 +66,18 @@ export default {
   methods: {
     scrollBottom() {
       this.bs.refresh()
-      this.bs.scrollTo(0, this.bs.maxScrollY)
+
+      setTimeout(() => {
+        this.bs.scrollTo(0, this.bs.maxScrollY)
+      }, 0)
     },
     getFromUser(msgs) {
       const { fromUser } = msgs
       return fromUser.userId === this.personal.userId
     },
     sendMsg() {
-      if (!this.msg) return void this.$toast('请输入您想输入的内容~~！')
+      this.$refs.sendInput.focus()
+      if (!this.msg.trim()) return void this.$toast('请输入您想输入的内容~~！')
       this.$http.get(this.$api.sendNotice, {
         params: {
           user_ids: this.$route.params.id,
@@ -172,7 +176,7 @@ export default {
     }
     .c-notice__send {
       color: #fff;
-      font-size: 36px;
+      font-size: 50px;
       padding: 0 20px;
     }
   }

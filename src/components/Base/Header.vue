@@ -1,5 +1,5 @@
 <template>
-  <header :class="['header', {'hader--isapp': isApp}]">
+  <header :class="['header', {'hader--isapp': isApp}]" ref="header">
     <transition :name="headerConfig.slide">
       <div class="bar" v-bind:key="headerConfig.changeHeader">
         <div v-if="headerConfig.searchBox">

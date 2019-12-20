@@ -2,11 +2,10 @@
   <div class="g-layout">
     <p class="c-search__title" v-if="clearSearch && !isSearchEd">热搜</p>
      <ul class="c-search__list" v-if="isSearchEd">
-      <li class="c-search__sons" v-for="sear in searachDatas" :key="sear.id">
-        <img class="c-sons__album" :src="sear.album.artist.img1v1Url" alt="">
+      <li class="c-search__sons" v-for="sear in searachDatas" :key="sear.id" @click="openMusic(sear)">
         <div class="c-sons__msg">
           <p class="c-songs__name">{{sear.name}}</p>
-          <p class="c-songs__album__name">{{sear.album.name}}</p>
+          <p class="c-songs__album__name">{{sear.artists[0].name}} - {{sear.album.name}}</p>
         </div>
         <div class="c-songs__option">
           <i class="iconfont">&#xe637;</i>
@@ -39,6 +38,9 @@ export default {
     this.getSearchHot()
   },
   methods: {
+    openMusic(music) {
+      this.$common.trigger('listenMusic', music.id, true)
+    },
     inputHotSearch(e) {
       const target = e.target
       if (target.classList.contains('c-search__item')) {
@@ -93,6 +95,15 @@ export default {
         })
       }
     }
+  },
+  watch: {
+    $route(n, v) {
+      if (!v || n.meta.oDeep > v.meta.oDeep) {
+        this.clearSearch = true
+        this.isSearchEd = false
+        this.$common.trigger('getStatus', '', 'search')
+      }
+    }
   }
 }
 </script>
@@ -113,8 +124,6 @@ export default {
     margin-top: 30px;
     color: #ccc;
     flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
   }
   .c-search__item {
     margin-bottom: 40px;
@@ -140,10 +149,10 @@ export default {
       text-overflow: ellipsis;
     }
     .c-songs__album__name {
+      margin-top: 5px;
       color: #444;
     }
     .c-songs__option {
-      width: 100px;
       display: flex;
       align-items: center;
       .iconfont {

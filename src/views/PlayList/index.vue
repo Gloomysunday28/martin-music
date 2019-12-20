@@ -39,7 +39,7 @@
         </div>
         <div class="c-recommend__lists">
           <music-list :music-data="recommends"/>
-      </div>
+        </div>
       </div>
     </div>
   </div>
@@ -132,7 +132,7 @@ export default {
   },
   watch: {
     $route(n, v) {
-      if (window.sessionStorage.scrollTop && n.meta.oDeep > v.meta.oDeep) {
+      if (window.sessionStorage.scrollTop && n.meta.oDeep > v.meta.oDeep && n.name !== 'MusicSongInfo') {
         this.$nextTick().then(_ => {
           this.bs.scrollTo(0, 0)
         })

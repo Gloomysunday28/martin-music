@@ -1,0 +1,211 @@
+<template>
+  <div class="g-layout">
+    <div class="c-song__frost__glass" v-lazy-decode="[songInfo.al.picUrl, {'className': 'c-song__info__img'}]">
+    </div>
+    <div class="c-song__contain">
+      <div class="c-song__cover__contain">
+        <div class="c-song__cover" v-lazy-decode="[songInfo.al.picUrl, {'className': 'c-song__info__img'}]">
+        </div>
+        <svg class="c-song__cd" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <circle class="progress-background" fill="transparent"></circle>
+          <circle class="progress-bar" fill="transparent"></circle>
+          <circle class="progress-bar progress-bar-9" fill="transparent"></circle>
+          <circle class="progress-bar progress-bar-8" fill="transparent"></circle>
+          <circle class="progress-bar progress-bar-7" fill="transparent"></circle>
+          <circle class="progress-bar progress-bar-6" fill="transparent"></circle>
+          <circle class="progress-bar progress-bar-5" fill="yellow"></circle>
+        </svg>
+      </div>
+      <div class="c-song__info">
+        <p>{{songInfo.name}}</p>
+        <p class="c-song__artist">{{songInfo.ar[0].name}}</p>
+      </div>
+      <div class="c-song__option">
+        <div v-for="icon in optionIcons" :key="icon.id" class="c-song__icon" v-on="icon.on">
+          <i class="iconfont" :class="icon.icon"></i>
+        </div>
+      </div>
+      <div class="c-song__simo">
+        <music-list :music-data="simoLists" record="record"/>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import MusicList from '@/pages/MusicList'
+
+export default {
+  name: 'MusicSongInfo',
+  components: {
+    MusicList
+  },
+  computed: {
+    id() {
+      return this.$route.params.id
+    }
+  },
+  data() {
+    return {
+      songInfo: {
+        al: {},
+        ar: [{}]
+      },
+      optionIcons: [{
+        id: 'menu',
+        icon: 'icon-guanli'
+      }, {
+        id: 'comment',
+        icon: 'icon-pinglun',
+        on: {
+          click: this.jumpToComment
+        }
+      }, {
+        id: 'delete',
+        icon: 'icon-shanchu'
+      }],
+      simoLists: []
+    }
+  },
+  mounted() {
+    this.$utils.allSettled([
+      this.getSongInfo(),
+      this.getSimoSong()
+    ])
+  },
+  methods: {
+    jumpToComment() {
+      this.$router.push({
+        name: 'MusicSongComment',
+        params: {
+          id: this.id
+        }
+      })
+    },
+    getSongInfo() {
+      return this.$http.get(this.$api.songDetail, {
+        params: {
+          ids: this.id
+        }
+      }).then(res => {
+        this.songInfo = res.data.songs[0] || {}
+      })
+    },
+    getSimoSong() {
+      return this.$http.get(this.$api.simoSong, {
+        params: {
+          id: this.id
+        }
+      }).then(res => {
+        this.simoLists = res.data.songs
+      })
+    }
+  }
+}
+</script>
+
+<style scoped lang="less">
+  .g-layout {
+    background: #fff;
+    .c-song__info__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .c-song__frost__glass {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      filter: blur(60px);
+      z-index: -1;
+    }
+    .c-song__contain {
+      margin: 200px 80px 0;
+    }
+    .c-song__cover__contain {
+      display: flex;
+    }
+    .c-song__cover {
+      width: 280px;
+      height: 280px;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .c-song__cd {
+      width: 200px;
+      height: 280px;
+    }
+    circle {
+      r: 100px;
+      cx: -20px;
+      cy: 105px;
+      stroke-width: 2px;
+      transform-origin: center center;
+    }
+    .progress-background {
+      fill: #000;
+    }
+    circle.progress-bar {
+      stroke: #666;
+      &.progress-bar-9 {
+        cx: -22px;
+        r: 90px;
+        stroke: rgba(102, 102, 102, .9);
+      }
+      &.progress-bar-8 {
+        cx: -25px;
+        r: 80px;
+        stroke: rgba(102, 102, 102, .8);
+      }
+      &.progress-bar-7 {
+        cx: -27px;
+        r: 70px;
+        stroke: rgba(102, 102, 102, .7);
+      }
+      &.progress-bar-6 {
+        cx: -32px;
+        r: 60px;
+        stroke: rgba(102, 102, 102, .6);
+      }
+      &.progress-bar-5 {
+        cx: -35px;
+        r: 50px;
+      }
+    }
+    .c-song__info {
+      margin-top: 50px;
+      color: #eee;
+      .c-song__artist {
+        color: #888;
+      }
+    }
+
+    .c-song__option {
+      display: flex;
+      align-items: center;
+      margin-top: 50px;
+      .c-song__icon {
+        width: 33%;
+        text-align: center;
+      }
+      .iconfont {
+        font-size: 70px;
+        color: #fff;
+      }
+      .icon-pinglun {
+        font-size: 50px;
+      }
+      .icon-shanchu {
+        font-size: 50px;
+        font-weight: bold;
+        color: rgba(255, 0, 0, .7);
+      }
+    }
+
+    .c-song__simo {
+      margin-top: 150px;
+    }
+  }
+</style>

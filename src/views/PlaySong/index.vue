@@ -1,6 +1,6 @@
 <template>
-  <div class="g-layout">
-    <div class="g-container" :style="{background: !bgUrl ? '#000' : `url(${bgUrl}) no-repeat center/cover`}">
+  <div class="g-layout" @click="playSong">
+    <div class="g-container" :style="{background: !music.bgUrl ? '#000' : `url(${music.bgUrl}) no-repeat center/cover`}">
     </div>
     <span class="header-back" @click.stop="scaleMusic">
       <i class="iconfont back-icon">&#xe61b;</i>
@@ -19,10 +19,24 @@
         </div>
       </transition>
     </div>
-    <div class="c-music__play" v-if="!isPlay">
-      <i class="iconfont">&#xe601;</i>
+    <div class="c-song__info">
+      <div class="c-song__msg">
+        <span class="c-song__name">{{music.songName}}</span>
+        <div class="c-song__artist">
+          <img class="c-song__artists" :src="music.bgUrl" alt="">
+          {{music.artists}}
+        </div>
+      </div>
+      <div class="c-song__option">
+        <transition name="zoom-out">
+          <i :class="{'c-song__icon--love': music.isLove}" class="iconfont icon-aixin1" :key="music.isLove" @click.stop="likeSong"></i>
+        </transition>
+      </div>
     </div>
-    <music-canvas :width="width" :height="height" ref="canvas" @click.native="playSong"/>
+    <div class="c-music__play" v-if="!isPlay">
+      <i class="iconfont icon-bofang"></i>
+    </div>
+    <music-canvas :width="width" :height="height" ref="canvas"/>
     <div class="c-music__control" @touchstart="touchstart" @touchmove="touchmove" @touchend="touchend"></div>
     <audio class="m-music__play" :src="src" controls="controls" ref="musicPlay"></audio>
   </div>
@@ -42,11 +56,11 @@ export default {
       default: '',
       required: true
     },
-    bgUrl: {
-      type: [String],
-      default: '',
+    music: {
+      type: Object,
+      default: () => ({}),
       required: false
-    }
+    },
   },
   computed: {
     allLyrics() {
@@ -78,6 +92,7 @@ export default {
   },
   activated() {
     const __self = this
+
     this.getSongUrl()
     this.$refs.musicPlay.addEventListener('ended', function () {
       this.play()
@@ -85,6 +100,19 @@ export default {
     }, false)
   },
   methods: {
+    likeSong() {
+      const like = !this.music.isLove
+      this.$http.get(this.$api.likeSong, {
+        params: {
+          id: this.id,
+          like
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.music.isLove = like
+        }
+      })
+    },
     scaleMusic() { // 将播放页面往下调
       this.$common.trigger('listenMusic')
       this.$common.trigger('listenMusicProgress', this.$refs.musicPlay.currentTime, this.$refs.musicPlay.duration)
@@ -129,9 +157,11 @@ export default {
       if (music.paused) {
         this.isPlay = true
         music.play()
+        this.$refs.canvas.startWave()
       } else {
         music.pause()
         this.isPlay = false
+        this.$refs.canvas.stopWave()
       }
 
       this.$emit('isPlay', this.isPlay)
@@ -168,11 +198,15 @@ export default {
           this.lyric = this.assembleLyric[this.lyricOrder++][1]
         } else this.lyric = ''
 
+        const { canvas, musicPlay } = this.$refs || {}
         this.$nextTick().then(() => {
-          this.$refs.musicPlay.play()
+          musicPlay.play()
           if (lrc.lyric) {
-            this.$refs.musicPlay.removeEventListener('timeupdate', this.updateLyric)
-            this.$refs.musicPlay.addEventListener('timeupdate', this.updateLyric)
+            musicPlay.removeEventListener('timeupdate', this.updateLyric)
+            musicPlay.addEventListener('timeupdate', this.updateLyric)
+          }
+          if (canvas) {
+            canvas.changeWabeBg()
           }
         })
       })
@@ -237,8 +271,8 @@ export default {
     opacity: 0;
   }
   .c-music__play {
-    width: 150px;
-    height: 150px;
+    width: 100vw;
+    height: 120vh;
     position: absolute;
     left: 0;
     top: 0;
@@ -247,6 +281,10 @@ export default {
     margin: auto;
     color: #fff;
     z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, .5);
   }
   .c-music__control {
     width: 100%;
@@ -310,5 +348,56 @@ export default {
   .c-lyric__content {
     overflow-y: auto;
     transition: transform .5s ease-in-out;
+  }
+  .c-song__info {
+    width: 650px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    left: 50px;
+    bottom: 400px;
+    z-index: 100;
+    color: #fff;
+    .c-song__msg {
+      width: 70%;
+    }
+    .c-song__name {
+      font-size: 42px;
+    }
+    .c-song__artist {
+      display: flex;
+      align-items: center;
+      margin-top: 30px;
+      font-size: 30px;
+      .c-song__artists {
+        margin-right: 40px;
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+      }
+    }
+    .c-song__option {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .iconfont {
+        position: absolute;
+      }
+    }
+    .icon-aixin1 {
+      top: 0;
+      right: 0;
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+    .icon-more {
+      top: 100px;
+      right: 15px;
+      font-size: 50px;
+    }
+    .c-song__icon--love {
+      color: #f75f47;
+    }
   }
 </style>

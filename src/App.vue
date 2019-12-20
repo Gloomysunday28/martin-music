@@ -9,13 +9,13 @@
     <div :class="['g-container']">
       <transition :name="fade">
         <keep-alive :exclude="keepAlive">
-          <router-view ref="wrong" :class="['page-view', {'g-container__full': !showHeader, 'page-header--import': showImportHeader}]" @changeHeaderBack="YGBOARD = false">
+          <router-view :key="$route.fullPath" ref="wrong" :class="['page-view', {'g-container__full': !showHeader, 'page-header--import': showImportHeader}]" @changeHeaderBack="YGBOARD = false">
           </router-view>
         </keep-alive>
       </transition>
       <transition name="clip">
         <keep-alive>
-          <play-song ref="music" :id="songId" :bgUrl="bgUrl"  @isPlay="v => isPlay = v" v-if="listenGlobal" v-show="listenGlobalDisplay"></play-song>
+          <play-song ref="music" :id="songId" :music="playMusic"  @isPlay="v => isPlay = v" v-if="listenGlobal" v-show="listenGlobalDisplay"></play-song>
         </keep-alive>
       </transition>
       <div class="m-music__cd" @click="listenMusic('', true)" v-if="showCD">
@@ -75,6 +75,7 @@ export default {
       hasNoBack: false,
       backPage: '',
       bgUrl: '',
+      playMusic: {},
       defaultMap: new Map([
         [/^(showImportHeader|isIndex)$/, false],
         [/^(keepAlive|backPage)$/, ''],
@@ -87,18 +88,33 @@ export default {
     this.$common.listen('setHeaderBack', this.changeHeaderBack)
     this.$common.listen('listenMusic', this.listenMusic)
     this.$common.listen('listenMusicProgress', this.listenMusicProgress)
+
+    this.getLoveSong()
   },
   methods: {
+    getLoveSong() {
+      if (!this.personal.userId) { return void 0 }
+
+      this.$http.get(this.$api.loveSongList, {
+        params: {
+          uid: this.personal.userId
+        }
+      }).then(res => {
+        this.$store.dispatch('setLoveSong', res.data.ids)
+      })
+    },
     playPause(isPlay) { // 播放或暂停
       this.isPlay = isPlay
       if (this.isPlay) {
         this.$refs.music.playSong()
       }
     },
-    listenMusic(id, bool = false, bgUrl) { // 是否听音乐
+    listenMusic(id, bool = false, playMusic) { // 是否听音乐
       this.listenGlobal = true
       this.listenGlobalDisplay = bool
-      bgUrl && (this.bgUrl = bgUrl)
+      if (playMusic) {
+        this.playMusic = playMusic
+      }
       if (id) {
         this.songId = id
       }
@@ -139,6 +155,17 @@ export default {
         } else this[data] = defaults
       }
     },
+    simlarRoute(n, v) {
+      const RouteName = 'MusicSongInfo'
+      if (n.name === RouteName && v.name === RouteName) {
+        const { step: newStep } = n.query
+        const { step: oldStep } = v.query
+
+        return +newStep >= +oldStep ? 'slide-in' : 'slide-out'
+      }
+
+      return false
+    },
     judgeRoute(n, v) {
       if (n.meta.isLogin || v.meta.isLogin) {
         this.fade = n.meta.isLogin ? 'login-in' : 'login-out'
@@ -148,7 +175,7 @@ export default {
         } else {
           if (v.name) {
             this.headerConfig.slide = n.meta.oDeep > v.meta.oDeep ? 'slide-in' : 'slide-out'
-            this.fade = n.meta.oDeep > v.meta.oDeep ? 'fade-in' : 'fade-out'
+            this.fade = this.simlarRoute(n, v) || (n.meta.oDeep > v.meta.oDeep ? 'fade-in' : 'fade-out')
           }
         }
       }
@@ -229,8 +256,6 @@ export default {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: #0D0D0D;
-  // touch-action: none;
   background: rgba(0, 0, 0, .9);
 }
 .page-header--import {

@@ -24,6 +24,7 @@ const api = {
   searchAdvance: '/search/suggest', // 搜索建议
   userSong: '/user/playlist', // 获取用户歌单
   userRecent: '/user/record', // 获取最近用户歌单
+  likeSong: '/like', // 喜欢音乐
   loveSongList: '/likelist', // 喜欢音乐的列表
   userSubCount: '/user/subcount', // 喜欢音乐的列表
   userEvent: '/user/event', // 获取用户动态
@@ -34,6 +35,8 @@ const api = {
   songUrl: '/song/url', // 歌曲地址
   playListDetail: '/playlist/detail', // 歌单内容
   songLyrics: '/lyric', // 获取歌词
+  songDetail: '/song/detail', // 获取歌曲详情
+  simoSong: '/simi/song', // 获取详细的歌曲
 
   // 关注
   followUser: '/follow', // 关注或者取关
@@ -42,6 +45,20 @@ const api = {
   noticeLists: '/msg/private', // 消息列表
   noticeHistory: '/msg/private/history', // 消息内容
   sendNotice: '/send/text', // 发送消息
+
+  // 评论
+  songComment: '/comment/music', // 歌曲评论列表
+  /**
+   * @params {Number} type
+   * 0: 歌曲
+     1: mv
+     2: 歌单
+     3: 专辑
+     4: 电台
+     5: 视频
+     6: 动态
+   */
+  likeMusic: '/comment/like'
 }
 
 export default {

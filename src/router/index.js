@@ -26,6 +26,7 @@ function lazyLoadView (AsyncView) {
 Vue.use(Router)
 
 const router = new Router({
+  base: '/martin-music/',
   mode: 'history',
   routes: [
     {
@@ -188,7 +189,7 @@ const router = new Router({
       component: () => import('@/views/Notice')
     },
     {
-      path: '/notice/chat/:id',
+      path: '/notice/chat/:id/',
       name: 'MusicChat',
       meta: {
         keepAlive: false,
@@ -200,6 +201,30 @@ const router = new Router({
       component: () => import('@/views/Notice/Chat')
     },
     {
+      path: '/song/option/:id',
+      name: 'MusicSongInfo',
+      meta: {
+        keepAlive: false,
+        showHeader: false,
+        oDeep: 11,
+        title: '',
+        showCD: false
+      },
+      component: () => import('@/views/SongInfo')
+    },
+    {
+      path: '/song/comment/:id',
+      name: 'MusicSongComment',
+      meta: {
+        keepAlive: false,
+        showHeader: false,
+        oDeep: 12,
+        title: true,
+        showCD: false
+      },
+      component: () => import('@/views/SongComment')
+    },
+    {
       path: '/play/song/:id',
       name: 'MusicPlaySong',
       meta: {
@@ -209,7 +234,7 @@ const router = new Router({
         title: ''
       },
       component: () => import('@/views/PlaySong')
-    }
+    },
   ]
 })
 

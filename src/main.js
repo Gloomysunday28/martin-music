@@ -61,6 +61,7 @@ Vue.mixin({
   },
   computed: mapState({
     personal: state => state.baseInfo.personal,
+    loveSongList: state => state.baseInfo.loveList,
   })
 })
 

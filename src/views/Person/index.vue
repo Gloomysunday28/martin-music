@@ -143,6 +143,8 @@ export default {
       })
     },
     getPersonMsg() {
+      if (!this.personal.userId) return this.$router.push({ name: 'MusicLogin' })
+
       Promise.all([
         this.getUserInfo(),
         this.getLoveSong(),
@@ -150,7 +152,7 @@ export default {
         this.getUserSubCount(),
       ]).then(({0: playList, 1: loveList, 2: recentList, 3: userSubCount}) => {
         this.playList = playList.data.playlist
-        this.loveList = loveList.data.ids
+        this.loveList = Array.isArray(loveList) ? loveList : loveList.data.ids
         this.recentList = recentList.data.weekData
         this.userSubCount = userSubCount.data.mvCount
       })
@@ -163,6 +165,7 @@ export default {
       })
     },
     getLoveSong() {
+      if (this.loveSongList) return this.loveSongList
       return this.$http.get(this.$api.loveSongList, {
         params: {
           uid: this.personal.userId

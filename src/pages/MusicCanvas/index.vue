@@ -21,17 +21,21 @@ export default {
   },
   data() {
     return {
+      isStop: false,
       ctx: null,
       waveBg: `rgba(${Math.random() * 255} ,${Math.random() * 255}, ${Math.random() * 255}, 1)`,
       waves: [],
-      wavesNum: 50,
-      waveWidth: this.width / 50,
+      wavesNum: 100,
+      waveWidth: this.width / 100,
     }
   },
   mounted() {
     this.initCanvas()
   },
   methods: {
+    changeWabeBg() {
+      this.waveBg = `rgba(${Math.random() * 255} ,${Math.random() * 255}, ${Math.random() * 255}, 1)`
+    },
     initCanvas() {
       this.ctx = this.$refs.canvas.getContext('2d')
       this.initWave()
@@ -39,15 +43,15 @@ export default {
     initWave() {
       const self = this
       for (let i = 0; i < this.wavesNum; i++) {
-        const h = ~~(Math.random() * (this.height / 6))
+        const h = ~~(Math.random() * (this.height / 200))
         const wave = {
           ix: this.waveWidth * i,
           ih: h,
           th: h,
           w: this.waveWidth,
-          speed: Math.random() + (this.height / 1000),
+          speed: Math.random() + (this.height / 2000),
           draw() {
-            if (this.ih < 0 || this.ih > self.height / 5) {
+            if (this.ih < 0 || this.ih > self.height / 15) {
               this.speed = -this.speed
             }
             var grd = self.ctx.createLinearGradient(0, 0, self.width, self.height)
@@ -67,6 +71,7 @@ export default {
       this.startWave()
     },
     drawWave() {
+      if (this.isStop) return cancelAnimationFrame(this.drawWave)
       this.ctx.clearRect(0, 0, this.width, this.height)
       this.waves.forEach(wv => {
         wv.draw()
@@ -74,17 +79,12 @@ export default {
       requestAnimation(this.drawWave)
     },
     stopWave() {
-      cancelAnimationFrame(this.drawWave)
+      this.isStop = true
     },
     startWave() {
-      cancelAnimationFrame(this.drawWave)
+      this.isStop = false
       requestAnimation(this.drawWave)
     }
   }
 }
 </script>
-
-<style scoped lang="less">
-  .c-music__bg {
-  }
-</style>

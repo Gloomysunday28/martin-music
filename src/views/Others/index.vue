@@ -59,7 +59,13 @@ export default {
 
 <style scoped lang="less">
   .g-layout {
-    padding: 0 20px;
+    padding: 100px 20px 0;
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
     .c-user__info {
       height: 500px;
       display: flex;

@@ -92,12 +92,22 @@ export default {
         }
       }).then(() => {
         comment.liked = !comment.liked
+        if (comment.liked) {
+          comment.likedCount++
+        } else {
+          comment.likedCount--
+        }
       })
     }
   },
   watch: {
     offset() {
       this.getSongComment()
+    },
+    $route(n, v) {
+      if (!v || (n.meta.oDeep > v.meta.oDeep && n.name == 'MusicSongComment')) {
+        this.getSongComment()
+      }
     }
   }
 }

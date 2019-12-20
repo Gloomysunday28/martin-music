@@ -171,7 +171,7 @@ const router = new Router({
       meta: {
         keepAlive: false,
         showHeader: true,
-        oDeep: 10,
+        oDeep: 15,
         title: ''
       },
       component: () => import('@/views/Others')
@@ -216,7 +216,7 @@ const router = new Router({
       path: '/song/comment/:id',
       name: 'MusicSongComment',
       meta: {
-        keepAlive: false,
+        keepAlive: true,
         showHeader: false,
         oDeep: 12,
         title: true,

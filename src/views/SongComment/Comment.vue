@@ -1,8 +1,8 @@
 <template functional>
   <div class="m-song__comment">
     <div class="m-comment__contain m-flex" v-for="comment in props.comments" :key="comment.id">
-      <div class="m-comment__avatarurl" v-lazy-decode="comment.user.avatarUrl">
-      </div>
+      <router-link :to="{name: 'MusicOthers', params: {uid: comment.user.userId}}" class="m-comment__avatarurl" v-lazy-decode="comment.user.avatarUrl">
+      </router-link>
       <div class="m-comment__content">
         <div class="m-comment__user">
           <div class="m-comment__like m-flex">

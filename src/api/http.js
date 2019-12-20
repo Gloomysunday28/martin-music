@@ -11,6 +11,7 @@ const noCache = [
   '/playlist/create',
   '/user/playlist',
   '/user/update',
+  '/comment/music',
 ]
 
 const box = new Vue()

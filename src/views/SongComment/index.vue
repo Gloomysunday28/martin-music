@@ -3,12 +3,9 @@
     <header class="header">
       评论
     </header>
-    <div class="c-comment__contain">
+    <div class="c-comment__contain" @scroll="scrolls">
       <better-scroll
-        :options="betterScrollOptions"
-        ref="betterScroll"
-        contain=".c-comment__contain"
-        @pullingDown="pullingDown"
+        :is-native="true"
         @pullingUp="pullingUp"
       >
         <div class="c-comment__content">
@@ -18,6 +15,8 @@
             :filterTime="$utils.filterTime"
             @likeComment="likeComment"
           />
+        </div>
+        <div class="c-comment__content">
           <p class="c-comment__label">最新评论</p>
           <music-comment
             :comments="comments"
@@ -45,20 +44,14 @@ export default {
       offset: 0,
       hotComments: [],
       comments: [],
-      betterScrollOptions: {
-        click: true,
-        preventDefault: true,
-        bounceTime: 600,
-        probeType: 3,
-      }
     }
   },
   mounted() {
     this.getSongComment()
   },
   methods: {
-    pullingDown() {
-      this.offset = 0
+    scrolls() {
+      console.log('martin', 321)/* 2019年12月23日 13时51分22秒 */
     },
     pullingUp() {
       this.offset += 1
@@ -76,10 +69,6 @@ export default {
         }
         this.hotComments.push(...(data.hotComments || []))
         this.comments.push(...(data.comments || []))
-
-        this.$nextTick().then(() => {
-          this.$refs.betterScroll.bs.refresh()
-        })
       })
     },
     likeComment(comment) {
@@ -105,7 +94,7 @@ export default {
       this.getSongComment()
     },
     $route(n, v) {
-      if (!v || (n.meta.oDeep > v.meta.oDeep && n.name == 'MusicSongComment')) {
+      if (!v || (n.meta.oDeep > v.meta.oDeep && n.name === 'MusicSongComment')) {
         this.getSongComment()
       }
     }
@@ -126,15 +115,18 @@ export default {
       align-items: center;
     }
     .c-comment__contain {
-      padding: 10px 30px 0;
+      padding: 0 30px;
       flex: 1;
-      overflow-y: auto;
+      overflow: hidden;
     }
     .c-comment__label {
-      margin: 20px 0;
-      position: -webkit-sticky;
+      padding: 20px 15px;
+      background: #0D0D0D;
+      position: sticky;
+      top: -1px;
       color: #aaa;
       font-size: 32px;
+      z-index: 100;
     }
   }
 </style>

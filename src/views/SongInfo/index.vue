@@ -28,6 +28,15 @@
       <div class="c-song__simo">
         <music-list :music-data="simoLists" record="record"/>
       </div>
+      <app-dialog
+        :dialogVisiable.sync="dialogVisiable"
+        @onSure="removeSong"
+        >
+        <p slot="header">是否从此歌单移除？</p>
+        <div>
+          将 <span class="m-red">{{songInfo.name}}</span> 移除
+        </div>
+      </app-dialog>
     </div>
   </div>
 </template>
@@ -43,10 +52,14 @@ export default {
   computed: {
     id() {
       return this.$route.params.id
-    }
+    },
+    pid() {
+      return this.$route.query.pid
+    },
   },
   data() {
     return {
+      dialogVisiable: false,
       songInfo: {
         al: {},
         ar: [{}]
@@ -62,7 +75,10 @@ export default {
         }
       }, {
         id: 'delete',
-        icon: 'icon-shanchu'
+        icon: 'icon-shanchu',
+        on: {
+          click: () => this.dialogVisiable = true
+        }
       }],
       simoLists: []
     }
@@ -74,6 +90,19 @@ export default {
     ])
   },
   methods: {
+    removeSong() {
+      this.$http.get(this.$api.removeSong, {
+        params: {
+          op: 'del',
+          pid: this.pid,
+          tracks: this.id
+        }
+      }).then(() => {
+        this.$toast('删除成功')
+      }).finally(() => {
+        this.dialogVisiable = false
+      })
+    },
     jumpToComment() {
       this.$router.push({
         name: 'MusicSongComment',
@@ -106,7 +135,7 @@ export default {
 
 <style scoped lang="less">
   .g-layout {
-    background: #fff;
+    // background: #fff;
     .c-song__info__img {
       width: 100%;
       height: 100%;
@@ -117,9 +146,10 @@ export default {
       left: 0;
       top: 0;
       width: 100vw;
-      height: 100vh;
+      height: 50vh;
       filter: blur(60px);
       z-index: -1;
+      overflow: hidden;
     }
     .c-song__contain {
       margin: 200px 80px 0;

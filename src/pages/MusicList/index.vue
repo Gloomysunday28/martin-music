@@ -41,7 +41,8 @@ export default {
         name: 'MusicSongInfo',
         params: { id: music.id },
         query: {
-          step: this.record ? ++this.$route.query.step : 0
+          step: this.record ? ++this.$route.query.step : 0,
+          pid: this.$route.query.id
         }
       })
     },

@@ -20,6 +20,7 @@ export default {
   methods: {
     show(bool) {
       this.showLoading = bool
+      this.$store.commit('setLoading', bool)
     }
   }
 }

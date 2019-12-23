@@ -1,43 +1,16 @@
 import Vue from 'vue'
-import {mapState} from 'vuex'
+import store from '@/store'
+import { mapState } from 'vuex'
 import App from './App'
 import router from './router'
-import Bus from '@/utils/Bus'
-import FastClick from 'fastclick'
-import Toast from '@/components/App/Toast'
-import Loading from '@/components/App/Loading'
-import Dialog from '@/components/App/Dialog'
-import HTTP from '@/api/http'
-import Api from '@/api/api'
-import store from '@/store'
-import MusicInput from '@/components/App/Form/Input'
-import MusicTextArea from '@/components/App/Form/TextArea'
-import isApp from '@/utils/isApp'
-import VueLazyload from 'vue-lazyload'
-import log from '@/utils/log'
-import utils from '@/utils'
 import lazyDecode from '@/directive/lazyDecode'
+import VueLazyload from 'vue-lazyload'
+import FastClick from 'fastclick'
 import '@/assets/css/common.less'
 import 'swiper/dist/css/swiper.css'
 import '@/assets/font/iconfont.css'
 
-const components = [MusicInput, MusicTextArea]
-
-components.forEach(comp => {
-  Vue.component(comp.name, comp)
-})
-
 FastClick.attach(document.body)
-
-Vue.use(Toast)
-Vue.use(Loading)
-Vue.use(Dialog)
-Vue.use(Bus)
-Vue.use(HTTP)
-Vue.use(Api)
-Vue.use(log)
-Vue.use(utils)
-
 Vue.config.productionTip = false
 
 const starcts = Vue.config.optionMergeStrategies
@@ -54,9 +27,9 @@ Vue.mixin({
       }
     }
   },
-  data() {
+  data(vm) {
     return {
-      isApp
+      isApp: vm.isApp
     }
   },
   computed: mapState({
@@ -65,18 +38,28 @@ Vue.mixin({
   })
 })
 
-// const requireComponent = require.context(
+// require.context(
 //   // 其组件目录的相对路径
-//   '@/components',
+//   '@/components/App',
 //   // 是否查询其子目录
 //   true,
 //   // 匹配基础组件文件名的正则表达式
-//   /Header[A-Z]\w+\.(vue|js)$/
+//   /([Toast|Loading|Dialog]\/index.js)|(Form)\/(.*)\.vue/
 // )
 
-// requireComponent.keys().forEach(fileName => {
-//   console.log(requireComponent(fileName))
-// })
+const requireBaseComponent = require.context('@/components/App', true, /([Toast|Loading|Dialog|Form]\/index.js)/)
+const requireHoc = require.context('@/hoc', false)
+const requireUtils = require.context('@/utils', false)
+const requireServer = require.context('@/api', false)
+
+const plugins = [requireBaseComponent, requireHoc, requireUtils, requireServer]
+plugins.forEach(plugin => {
+  plugin.keys().forEach(fileName => {
+    const modules = plugin(fileName).default
+    Vue.use(modules)
+  })
+})
+
 Vue.use(lazyDecode, {
   loading: require('@/assets/img/loading-ps.jpg')
 })

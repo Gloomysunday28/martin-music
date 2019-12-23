@@ -33,4 +33,8 @@ function isHave (m) {
   }
 }
 
-export default inApp
+export default {
+  install(Vue) {
+    Vue.prototype.isApp = inApp
+  }
+}

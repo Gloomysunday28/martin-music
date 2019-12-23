@@ -37,6 +37,7 @@ const api = {
   songLyrics: '/lyric', // 获取歌词
   songDetail: '/song/detail', // 获取歌曲详情
   simoSong: '/simi/song', // 获取详细的歌曲
+  removeSong: '/playlist/tracks', // 删除歌单中的歌曲
 
   // 关注
   followUser: '/follow', // 关注或者取关

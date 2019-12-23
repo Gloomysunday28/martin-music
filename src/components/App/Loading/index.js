@@ -1,8 +1,10 @@
 import Vue from 'vue'
+import store from '@/store'
 import Loading from './index.vue'
 
 const loadingContain = new (Vue.extend(Loading))({
-  el: document.createElement('div')
+  el: document.createElement('div'),
+  store
 })
 
 const showLoading = (bool) => {

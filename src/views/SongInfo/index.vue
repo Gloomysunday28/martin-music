@@ -22,7 +22,11 @@
       </div>
       <div class="c-song__option">
         <div v-for="icon in optionIcons" :key="icon.id" class="c-song__icon" v-on="icon.on">
-          <i class="iconfont" :class="icon.icon"></i>
+          <InsertParent :dymicData="icon.dymicData">
+            <transition name="zoom-out" slot="parent" v-if="icon.transition">
+            </transition>
+            <i :key="icon.changeKey ? icon.changeKey() : null " class="iconfont" :class="icon.icon"></i>
+          </InsertParent>
         </div>
       </div>
       <div class="c-song__simo">
@@ -57,14 +61,34 @@ export default {
       return this.$route.query.pid
     },
   },
-  data() {
+  data(vm) {
     return {
       dialogVisiable: false,
+      liked: false,
       songInfo: {
         al: {},
-        ar: [{}]
+        ar: [{}],
+        liked: false
       },
       optionIcons: [{
+        transition: 'zoom-out',
+        id: 'love',
+        icon: 'icon-aixin1',
+        on: {
+          click: this.likeSong
+        },
+        changeKey() {
+          return vm.liked ? 'zoom-out' : 'zoom-in'
+        },
+        dymicData() {
+          return {
+            class: {
+              'icon-aixin1': true,
+              'c-song__icon--love': vm.liked
+            }
+          }
+        }
+      }, {
         id: 'menu',
         icon: 'icon-guanli'
       }, {
@@ -77,7 +101,7 @@ export default {
         id: 'delete',
         icon: 'icon-shanchu',
         on: {
-          click: () => this.dialogVisiable = true
+          click: () => { this.dialogVisiable = true }
         }
       }],
       simoLists: []
@@ -90,6 +114,27 @@ export default {
     ])
   },
   methods: {
+    likeSong() {
+      const like = !this.liked
+      this.$http.get(this.$api.likeSong, {
+        params: {
+          id: this.id,
+          like
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.liked = like
+          if (like) {
+            this.loveSongList.push(+this.id)
+          } else {
+            const index = this.loveSongList.indexOf(+this.id)
+            if (~index) this.loveSongList.splice(index, 1)
+          }
+
+          this.$store.dispatch('setLoveSong', this.loveSongList)
+        }
+      })
+    },
     removeSong() {
       this.$http.get(this.$api.removeSong, {
         params: {
@@ -118,6 +163,7 @@ export default {
         }
       }).then(res => {
         this.songInfo = res.data.songs[0] || {}
+        this.liked = this.loveSongList.includes(+this.id)
       })
     },
     getSimoSong() {
@@ -214,10 +260,13 @@ export default {
 
     .c-song__option {
       display: flex;
-      align-items: center;
       margin-top: 50px;
       .c-song__icon {
-        width: 33%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 25%;
         text-align: center;
       }
       .iconfont {
@@ -226,6 +275,17 @@ export default {
       }
       .icon-pinglun {
         font-size: 50px;
+      }
+      .icon-aixin1 {
+        position: absolute;
+        left: 0;
+        top: 15px;
+        right: 0;
+        margin: auto;
+        font-size: 50px;
+        &.c-song__icon--love {
+          color: #f75f47;
+        }
       }
       .icon-shanchu {
         font-size: 50px;

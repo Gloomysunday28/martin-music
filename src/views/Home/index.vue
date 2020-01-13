@@ -1,5 +1,6 @@
 <template>
   <div class="g-layout">
+    <router-view></router-view>
     <div class="c-home__contain" ref="contain">
       <router-link :to="{name: 'MusicSearch'}" class="c-home__search">
         <i class="iconfont">&#xe621;</i>
@@ -64,7 +65,6 @@ export default {
   },
   data(vm) {
     return {
-      bbb: {},
       tag: false,
       banner: [],
       swiperOption: {

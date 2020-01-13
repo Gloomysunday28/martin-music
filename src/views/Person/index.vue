@@ -39,7 +39,7 @@
       <router-link tag="div" class="c-person__list" :to="{name: 'MusicSongList', query: {type: 0}}">
         <div class="c-song__list">
           <div class="c-song__img" v-for="play in playListCover" :key="play.id">
-            <img class="c-song__cover" :src="play.coverImgUrl">
+            <div class="c-song__cover" v-lazy-decode="play.coverImgUrl"></div>
           </div>
         </div>
         <div class="c-song__title">
@@ -50,7 +50,7 @@
       <div class="c-person__list">
         <div class="c-song__list">
           <div class="c-song__img" v-for="play in recentListCover" :key="play.song.id">
-            <img class="c-song__cover" :src="play.song.al.picUrl">
+            <div class="c-song__cover" v-lazy-decode="play.song.al.picUrl"></div>
           </div>
           <div class="c-song__img" v-for="play in getRestRecentCover" :key="play">
           </div>
@@ -104,6 +104,14 @@ export default {
       userInfo: {}
     }
   },
+  beforeRouteEnter(to, from, next) {
+    next(function(a) {
+      console.log(a)
+    })
+  },
+  // beforeRouteLeave(to, from, next) {
+  //   next(false)
+  // },
   computed: {
     playListCover() {
       return [...this.playList].splice(0, 3)
@@ -117,6 +125,7 @@ export default {
     },
   },
   mounted() {
+    console.log('martin', this.$router)/* 2020年01月09日 17时33分30秒 */
     this.$common.listen('changePageStatus', () => {
       this.$router.push({
         name: 'MusicSetting'

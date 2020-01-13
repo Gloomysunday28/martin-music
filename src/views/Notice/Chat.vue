@@ -19,7 +19,7 @@
       </div>
     </div>
     <form action="" class="c-notice__send__container m-flex" @submit.prevent>
-      <input ref="sendInput" class="c-notice__input" type="search" v-model="msg" placeholder="说点什么吧~~" @keyup.enter="sendMsg">
+      <input ref="sendInput" class="c-notice__input" type="text" v-model="msg" placeholder="说点什么吧~~" @keyup.enter="sendMsg">
       <i class="c-notice__send iconfont icon-jiahao"></i>
     </form>
   </div>

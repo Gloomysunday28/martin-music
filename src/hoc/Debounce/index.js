@@ -1,13 +1,28 @@
-const debounce = (fn, delayTime) => {
+const debounce = function(fn, wait, immediate) {
   let timer = null
-  return function(...rest) {
-    if (timer) {
-      clearTimeout(timer)
+
+  function debounced() {
+    if (timer) clearTimeout(timer) // clearTimeout 无法消除timer变量值, 只有手动设置为null, 才视为消除
+    if (immediate) { // 当事件在一定时间内不断触发, timer始终是有值的, function在这段时间内是不会执行的
+      const cancelTime = !timer
+      timer = setTimeout(_ => {
+        timer = null
+      }, wait)
+
+      if (cancelTime) return fn && fn.apply(this, arguments)
+    } else {
+      timer = setTimeout(_ => {
+        fn && fn.apply(this, arguments)
+      }, wait)
     }
-    timer = setTimeout(val => {
-      fn && fn.apply(fn, rest)
-    }, delayTime)
   }
+
+  debounced.cancel = function() { // 如果wait时间过久, 可以重置防抖时间
+    clearTimeout(timer)
+    timer = null
+  }
+
+  return debounced
 }
 
 export default {

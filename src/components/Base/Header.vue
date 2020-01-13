@@ -13,9 +13,9 @@
           </div>
         </div>
         <div class="c-search" v-if="headerConfig.search">
-          <Debounce>
+          <MusicDebounce>
             <input class="c-home__search" type="text" v-model="search" @keyup="searchData"/>
-          </Debounce>
+          </MusicDebounce>
           <i class="iconfont">&#xe621;</i>
           <span class="c-search__cancel" @click="$router.back()">取消</span>
         </div>
@@ -42,12 +42,12 @@
 <script>
 import Extra from './HeaderExtra'
 import {mapState} from 'vuex'
-import Debounce from '@/hoc/Debounce'
+// import Debounce from '@/hoc/Debounce'
 
 export default {
   name: 'BaseHeader',
   components: {
-    Debounce,
+    // Debounce,
     'base-extra': Extra
   },
   props: {

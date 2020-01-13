@@ -88,7 +88,7 @@ export default {
     this.$common.listen('setHeaderBack', this.changeHeaderBack)
     this.$common.listen('listenMusic', this.listenMusic)
     this.$common.listen('listenMusicProgress', this.listenMusicProgress)
-
+    console.log('martin', this)/* 2020年01月10日 11时18分34秒 */
     this.getLoveSong()
   },
   methods: {

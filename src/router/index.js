@@ -61,14 +61,6 @@ const router = new Router({
       components: {
         default: () => lazyLoadView(import('@/views/Home'))
       },
-      children: [{
-        path: 'a',
-        component: () => import('@/views/Home/A'),
-        children: [{
-          path: 'b',
-          component: () => import('@/views/Home/B'),
-        }]
-      }]
     },
     {
       path: '/play/list',

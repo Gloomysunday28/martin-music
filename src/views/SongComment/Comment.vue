@@ -20,6 +20,8 @@
           {{comment.content}}
         </div>
       </div>
+      <slot :comment="comment">
+      </slot>
     </div>
   </div>
 </template>

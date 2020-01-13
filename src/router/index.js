@@ -43,6 +43,7 @@ const router = new Router({
     {
       path: '/',
       name: 'MusicHome',
+      alias: ['/Home'],
       meta: {
         keepAlive: true,
         isHome: true,
@@ -50,7 +51,24 @@ const router = new Router({
         isIndex: true,
         oDeep: 1
       },
-      component: () => lazyLoadView(import('@/views/Home'))
+      caseSensitive: true,
+      // pathToRegexpOptions: {
+      //   sensitive: false
+      // },
+      props: {
+        a: 1
+      },
+      components: {
+        default: () => lazyLoadView(import('@/views/Home'))
+      },
+      children: [{
+        path: 'a',
+        component: () => import('@/views/Home/A'),
+        children: [{
+          path: 'b',
+          component: () => import('@/views/Home/B'),
+        }]
+      }]
     },
     {
       path: '/play/list',
@@ -201,7 +219,7 @@ const router = new Router({
       component: () => import('@/views/Notice/Chat')
     },
     {
-      path: '/song/option/:id',
+      path: '/song/option/:id?',
       name: 'MusicSongInfo',
       meta: {
         keepAlive: false,
